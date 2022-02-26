@@ -16,3 +16,20 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 *.iml
+# Ignore Gradle build output directory
+build
+
+idea/*.xml
+.idea/.name
+.idea/copyright
+.idea/libraries
+.idea/shelf
+targetg
+out
+build/*
+.gradle/*
+report/*
+
+*.ipr
+*.iws
+*.zip
