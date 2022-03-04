@@ -1,5 +1,12 @@
 # Базовый репозиторий для задачи 2 по курсу "Технологии программирования" 2022
 
+***Я начинал работу в другом [репозитории](https://github.com/vladdenisov/task2), затем перенес коммиты в данный.***
+
+`gradle workflow` используется для сборки `standalone jar` и загрузки артефактов.
+
+
+
+
 ## Инструкция
 1. Сделайте [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) репозитория
 2. Настройте систему сборки [maven](https://maven.apache.org/) или [gradle](https://gradle.org/)
