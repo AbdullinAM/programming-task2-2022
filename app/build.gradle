@@ -19,10 +19,11 @@ repositories {
 dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
+    // Use args4j library.
     implementation group: 'args4j', name: 'args4j', version: '2.33'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
-    implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+
 }
 
 application {

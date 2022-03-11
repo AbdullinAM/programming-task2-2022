@@ -36,10 +36,8 @@ public class PackRLE {
         StringBuilder unpackResult = new StringBuilder();
         StringBuilder digitSequence = new StringBuilder();
 
-
         char[] chars = content.toCharArray();
         boolean digitFlag = false;
-
         for (char c : chars) {
             if (Character.isDigit(c)) {
                 digitFlag = true;
