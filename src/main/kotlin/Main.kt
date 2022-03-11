@@ -1,3 +1,4 @@
+import kotlinx.cli.*
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -7,6 +8,7 @@ import java.text.SimpleDateFormat
 import java.text.StringCharacterIterator
 import java.util.*
 
+// Get unix-ish permissions in windows
 fun permissionsFallback(file: File, numeric: Boolean? = false): String {
     val permissions = StringBuilder("----")
     var counter = 0
@@ -101,18 +103,19 @@ fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolea
         result.append("${formatTime(file.lastModified())} ")
     }
     // Print the name of directory red
-    if (file.isDirectory && !isConsole)
+    if (file.isDirectory && isConsole)
         result.append("\u001b[31m${file.name}\u001b[0m")
     else
         result.append(file.name)
-    if (!file.isDirectory && (isLong || isConsole)) {
+    if (!file.isDirectory && (isLong || isHuman)) {
         result.append(" ${displaySize(file, isHuman)}")
     }
     return result.toString()
 }
 
 fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: Boolean, isConsole: Boolean): List<String> {
-    var files = File(path).listFiles()?.sorted()!!
+    var files = File(path).listFiles()?.sorted()
+    if (files === null) return listOf("")
     if (isReversed)
         files = files.reversed()
     val strings = mutableListOf<String>()
@@ -122,44 +125,34 @@ fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: 
     return strings
 }
 
-
-fun main(args: Array<String>) {
-    val flags = mutableMapOf(
-        'h' to false,
-        'l' to false,
-        'r' to false,
-        'o' to false,
-    )
-    for (i in args.indices) {
-        if (args[i].contains('-') && args[i].length > 1) {
-            for (j in 1 until args[i].length) {
-                if (args[i][j] in flags) {
-                    flags[args[i][j]] = true
-                }
-            }
-        }
-    }
-    val paths = args.filter { !it.contains('-') }
-    val path = if (paths.isNotEmpty()
-        && !paths.last().contains('-')
-        && ((paths.size == 2 && flags.getOrDefault('o', false)) || !flags.getOrDefault('o', false) )
-    ) {
-        Paths.get(paths.last()).toAbsolutePath().toString()
+fun produce(result: List<String>, outputFileName: String?) {
+    if (!outputFileName.isNullOrEmpty()) {
+        File(Paths.get(outputFileName).toAbsolutePath().toString()).writeText(result.joinToString("\n"))
     } else {
-        Paths.get("").toAbsolutePath().toString()
-    }
-    val strings = generateOutput(
-        path,
-        flags.getOrDefault('l', false),
-        flags.getOrDefault('h', false),
-        flags.getOrDefault('r', false),
-        flags.getOrDefault('o', false)
-    )
-    if (flags.getOrDefault('o', false)) {
-        File(paths[0]).writeText(strings.joinToString("\n"))
-    } else {
-        for (string in strings) {
+        for (string in result) {
             println(string)
         }
     }
+}
+
+
+
+fun main(args: Array<String>) {
+    val parser = ArgParser("ls", useDefaultHelpShortName = false)
+    val path by parser.argument(ArgType.String, description = "Path to folder").optional().default("")
+    val output by parser.option(ArgType.String, shortName = "o", description = "Output file name")
+    val long by parser.option(ArgType.Boolean, shortName = "l", description = "Turn on long mode").default(false)
+    val human by parser.option(ArgType.Boolean, shortName = "h", description = "Turn on human-readable mode").default(false)
+    val reverse by parser.option(ArgType.Boolean, shortName = "r", description = "Reverse files list").default(false)
+    parser.parse(args)
+    val absolutePath = Paths.get(path).toAbsolutePath().toString()
+    val strings = generateOutput(
+        absolutePath,
+        long,
+        human,
+        reverse,
+        output.isNullOrEmpty()
+    )
+    produce(strings, output)
+
 }

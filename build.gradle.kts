@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
 }
 
