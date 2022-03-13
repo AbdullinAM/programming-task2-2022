@@ -17,11 +17,6 @@ repositories {
     mavenCentral()
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'programming.task2.PackRLEParser'
-    }
-}
 
 dependencies {
     // Use JUnit test framework.
@@ -30,8 +25,31 @@ dependencies {
     implementation 'args4j:args4j:2.33'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
-
 }
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'programming.task2.PackRLEParser'
+    }
+}
+
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    classifier = 'all'
+    from {
+        // change here: runtimeClasspath instead of runtime
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+
+artifacts {
+    archives fatJar
+}
+
 
 application {
     // Define the main class for the application.
