@@ -23,9 +23,7 @@ public class PackRLE {
                 sequenceLength = 1;
             }
         }
-        if (sequenceLength > 1) {
-            packResult.append(sequenceLength);
-        }
+        if (sequenceLength > 1) packResult.append(sequenceLength);
         packResult.append(currentChar);
 
         return packResult.toString();

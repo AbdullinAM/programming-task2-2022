@@ -11,16 +11,23 @@ plugins {
     id 'application'
 }
 
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'programming.task2.PackRLEParser'
+    }
 }
 
 dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
     // Use args4j library.
-    implementation group: 'args4j', name: 'args4j', version: '2.33'
+    implementation 'args4j:args4j:2.33'
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
@@ -28,6 +35,6 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'programming.task2.App'
+    mainClass = 'programming.task2.PackRLEParser'
 }
 
