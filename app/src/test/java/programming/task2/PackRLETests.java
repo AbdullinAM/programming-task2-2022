@@ -66,7 +66,7 @@ public class PackRLETests {
     }
 
     @Test
-    public void poemPack() throws IOException {
+    public void packerPoemTest() throws IOException {
         String cmd = "-z -out src/main/resources/testRes/output3.txt src/main/resources/testRes/input3.txt";
         String expected = "src/main/resources/testRes/result3.txt";
         String actual = "src/main/resources/testRes/output3.txt";
@@ -77,7 +77,7 @@ public class PackRLETests {
     }
 
     @Test
-    public void poemUnpack() throws IOException {
+    public void unpackerPoemTest() throws IOException {
         String cmd = "-u -out src/main/resources/testRes/output4.txt src/main/resources/testRes/input4.txt";
         String expected = "src/main/resources/testRes/result4.txt";
         String actual = "src/main/resources/testRes/output4.txt";
