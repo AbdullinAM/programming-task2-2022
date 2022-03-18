@@ -1,6 +1,14 @@
-import kotlinx.cli.*
+import com.github.ajalt.clikt.*
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.arguments.default
+import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.flag
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.types.path
 import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.attribute.PosixFilePermissions
 import java.text.CharacterIterator
@@ -96,10 +104,8 @@ fun displaySize(file: File, isHuman: Boolean): String {
 
 fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolean): String {
     val result = StringBuilder()
-    if (isLong || isHuman) {
-        result.append("${displayPermissions(file, isHuman)} ")
-    }
     if (isLong) {
+        result.append("${displayPermissions(file, isHuman)} ")
         result.append("${formatTime(file.lastModified())} ")
     }
     // Print the name of directory red
@@ -107,7 +113,7 @@ fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolea
         result.append("\u001b[31m${file.name}\u001b[0m")
     else
         result.append(file.name)
-    if (!file.isDirectory && (isLong || isHuman)) {
+    if (!file.isDirectory && isLong) {
         result.append(" ${displaySize(file, isHuman)}")
     }
     return result.toString()
@@ -136,23 +142,24 @@ fun produce(result: List<String>, outputFileName: String?) {
 }
 
 
-
-fun main(args: Array<String>) {
-    val parser = ArgParser("ls", useDefaultHelpShortName = false)
-    val path by parser.argument(ArgType.String, description = "Path to folder").optional().default("")
-    val output by parser.option(ArgType.String, shortName = "o", description = "Output file name")
-    val long by parser.option(ArgType.Boolean, shortName = "l", description = "Turn on long mode").default(false)
-    val human by parser.option(ArgType.Boolean, shortName = "h", description = "Turn on human-readable mode").default(false)
-    val reverse by parser.option(ArgType.Boolean, shortName = "r", description = "Reverse files list").default(false)
-    parser.parse(args)
-    val absolutePath = Paths.get(path).toAbsolutePath().toString()
-    val strings = generateOutput(
-        absolutePath,
-        long,
-        human,
-        reverse,
-        output.isNullOrEmpty()
-    )
-    produce(strings, output)
-
+class LS : CliktCommand() {
+    private val path: Path by argument("Path", "Path to folder").path(canBeFile = false).default(Paths.get("").toAbsolutePath())
+    private val output by option("-o", help = "Output file name")
+    private val long: Boolean by option("-l", help = "Turn on long mode").flag()
+    private val human: Boolean by option("-h", help = "Turn on human-readable mode").flag()
+    private val reverse: Boolean by option("-r", help = "Reverse files list").flag()
+    override fun run() {
+        val absolutePath = path.toString()
+        val strings = generateOutput(
+            absolutePath,
+            long,
+            human,
+            reverse,
+            output.isNullOrEmpty()
+        )
+        produce(strings, output)
+    }
 }
+
+
+fun main(args: Array<String>) = LS().main(args)

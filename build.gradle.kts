@@ -1,7 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+//import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
 plugins {
     kotlin("jvm") version "1.5.31"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     application
 }
 
@@ -13,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.4")
+    implementation("com.github.ajalt.clikt:clikt:3.4.0")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
 }
 
@@ -28,17 +30,25 @@ tasks.withType<KotlinCompile>() {
 application {
     mainClass.set("MainKt")
 }
+//tasks.withType<KotlinTest>() {
+//
+//}
+//tasks.jar {
+//    manifest {
+//        attributes(
+//            "Main-Class" to application.mainClass
+//        )
+//    }
+//    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//    from(sourceSets.main.get().output)
+//    dependsOn(configurations.runtimeClasspath)
+//    from({
+//        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+//    })
+//}
 
-tasks.jar {
-    manifest {
-        attributes(
-            "Main-Class" to application.mainClass
-        )
-    }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from(sourceSets.main.get().output)
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
+tasks.shadowJar {
+    archiveBaseName.set("ls")
+    archiveVersion.set(version)
+    minimize()
 }
