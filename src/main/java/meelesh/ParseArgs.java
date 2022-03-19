@@ -1,6 +1,7 @@
 package meelesh;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,12 +12,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Data
+@NoArgsConstructor
 public class ParseArgs {
 
     private String[] args;
-    private boolean isExistH = false;
-    private boolean isExistC = false;
-    private boolean isExistSi = false;
+    private boolean h = false;
+    private boolean c = false;
+    private boolean si = false;
     private Set<String> allPaths = new HashSet<>();
     private List<String> files = new ArrayList<>();
 
@@ -32,10 +34,10 @@ public class ParseArgs {
 
         for (int i = 1; i < args.length; i++) {
             switch (args[i]) {
-                case ("-h") -> isExistH = true;
-                case ("-c") -> isExistC = true;
-                case ("--si") -> isExistSi = true;
-                default -> sortFilesAndCatalogs("source/" + args[i]);
+                case ("-h") -> h = true;
+                case ("-c") -> c = true;
+                case ("--si") -> si = true;
+                default -> sortFilesAndCatalogs(args[i]);
             }
         }
         findAllFiles();
@@ -63,12 +65,11 @@ public class ParseArgs {
         return fileList == null? new File[] {}: fileList;
     }
 
-    private boolean isFile(String fileString) {
+    public boolean isFile(String fileString) {
         String pattern = "\\w\\.\\w";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(fileString);
-        if (m.find() && new File(fileString).isFile()) return true;
-        return false;
+        return m.find() && new File(fileString).isFile();
     }
 
 

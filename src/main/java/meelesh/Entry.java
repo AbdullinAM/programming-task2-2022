@@ -1,8 +1,5 @@
 package meelesh;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * пример: du [-h] [-c] [--si] file1 file2 file3 …
  *  du - название программы
@@ -15,19 +12,7 @@ public class Entry {
     public static void main(String[] args) {
         ParseArgs parseArgs = new ParseArgs(args);
         FileSizeReader fIleSizeReader = new FIleSizeReaderImpl();
-
         OutputGenerator outputGenerator = new OutputGenerator(parseArgs, fIleSizeReader);
         outputGenerator.print();
-
-//        List<String> filePaths = parseArgs.parse();
-//        List<Double> fileSizes = filePaths.stream()
-//                .map(fIleSizeReader::getFileFromString)
-//                .map(fIleSizeReader::getSizeBytes).toList();
-//
-//        for (int i = 0; i < filePaths.size(); i++) {
-//            nameAndSize.put(filePaths.get(i), fileSizes.get(i));
-//        }
-//
-//
     }
 }

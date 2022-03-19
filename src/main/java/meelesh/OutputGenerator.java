@@ -1,18 +1,25 @@
 package meelesh;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.pow;
+
+@NoArgsConstructor
+@Data
 public class OutputGenerator {
 
     private ParseArgs parseArgs;
     private FileSizeReader fileSizeReader;
+    private final int defaultBase = 1024;
+    private final int siBase = 1000;
+    private final Map<String, Double> fileAndBytes = new HashMap<>();
     private Double totalSize = 0.0;
-
-    Map<String, Double> fileAndBytes = new HashMap<>();
-    Map<String, String> result = new HashMap<>();
-
+    
     public OutputGenerator(ParseArgs parseArgs, FileSizeReader fileSizeReader) {
         this.parseArgs = parseArgs;
         this.fileSizeReader = fileSizeReader;
@@ -21,11 +28,11 @@ public class OutputGenerator {
 
 
     private void exploreFiles() {
-        parseArgs.parse();
         List<String> filePaths = parseArgs.parse();
         List<Double> fileSizes = filePaths.stream()
                 .map(fileSizeReader::getFileFromString)
-                .map(fileSizeReader::getSizeBytes).toList();
+                .map(fileSizeReader::getSizeBytes)
+                .toList();
 
         for (int i = 0; i < filePaths.size(); i++) {
             fileAndBytes.put(filePaths.get(i), fileSizes.get(i));
@@ -35,27 +42,59 @@ public class OutputGenerator {
 
     public void print() {
 
-        String totalSizeString = "";
+        if (parseArgs.isH()) {
+            if (parseArgs.isSi()) {
+                fileAndBytes
+                        .entrySet()
+                        .stream()
+                        .map(file -> "file name:" + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), siBase))
+                        .forEach(System.out::println);
+            }
 
-        if (parseArgs.isExistSi() && parseArgs.isExistH()) {
-            fileAndBytes.entrySet().forEach(file -> file.getValue());
+            if (!parseArgs.isSi()) {
+                fileAndBytes
+                        .entrySet()
+                        .stream()
+                        .map(file -> "file name:" + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), defaultBase))
+                        .forEach(System.out::println);
+            }
+            if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
+
+            return;
         }
 
-        if (parseArgs.isExistC()) {
-            System.out.println("");
+        if (parseArgs.isSi()) {
+            fileAndBytes
+                    .entrySet()
+                    .stream()
+                    .map(file -> "file name:" + file.getKey() + ", size: " + file.getValue() / siBase)
+                    .forEach(System.out::println);
+            if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
+            return;
         }
 
-        if (parseArgs.isExistH()) {
+        fileAndBytes
+                .entrySet()
+                .stream()
+                .map(file -> "file name:" + file.getKey() + ", size: " + file.getValue() / defaultBase)
+                .forEach(System.out::println);
+        if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
 
-        }
-
-
-        System.out.println("Total size: " + totalSizeString);
-        result.entrySet().forEach(file -> System.out.println("File name: " + file.getKey() + " size: " + file.getValue()));
+        System.exit(0);
     }
 
-    private String convertToReadableFormat(Double size) {
+    public String calculateTotalSize(double totalSizeBytes) {
+        if (parseArgs.isH() && parseArgs.isSi()) return "Total size: " + convertToReadableFormat(totalSizeBytes, siBase);
+        if (parseArgs.isH() && !parseArgs.isSi()) return "Total size: " + convertToReadableFormat(totalSizeBytes, defaultBase);
+        if (parseArgs.isSi()) return "Total size: " + String.format("%.2f", totalSizeBytes / siBase);
+        return "Total size: " +  String.format("%.2f", (totalSizeBytes / defaultBase));
+    }
 
+    public String convertToReadableFormat(Double size, int base) {
+        if (size >= 1073741824) return String.format("%.2f", (size / pow(base, 3))) + " GB";
+        if (size >= 1048576) return String.format("%.2f", (size / pow(base, 2))) + " MB";
+        if (size >= 1024) return String.format("%.2f", (size / base)) + " KB";
+        return size + " B";
     }
 
 }
