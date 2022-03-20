@@ -27,15 +27,15 @@ public class ParseArgs {
     }
 
     public List<String> parse() {
-        if (!args[0].equals("du")) {
-            System.out.println("Command '" + args[0] + "' not found, did you mean: command 'du' \nExample: du -h -c --si file1 file2 file3");
+        if (args.length == 0 || !args[0].equals("du")) {
+            System.out.println("Command 'du' not found. \nExample: du -h -c --si file1 file2 file3");
             System.exit(1);
         }
 
         for (int i = 1; i < args.length; i++) {
             switch (args[i]) {
                 case ("-h") -> h = true;
-                case ("-c") -> c = true;
+                case ("-c") ->  c = true;
                 case ("--si") -> si = true;
                 default -> sortFilesAndCatalogs(args[i]);
             }

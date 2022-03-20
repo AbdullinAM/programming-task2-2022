@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="meelesh.OutputGeneratorTest" time="0.04" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="meelesh.OutputGeneratorTest" time="0.037" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk-17.0.1/lib"/>
-    <property name="sun.java.command" value="/home/meelesh/dev/projects/task2/target/surefire/surefirebooter12342135677857457825.jar /home/meelesh/dev/projects/task2/target/surefire 2022-03-19T14-21-42_185-jvmRun1 surefire17560388479404168925tmp surefire_02110600632444507550tmp"/>
+    <property name="sun.java.command" value="/home/meelesh/dev/projects/task2/target/surefire/surefirebooter5139478866752370786.jar /home/meelesh/dev/projects/task2/target/surefire 2022-03-21T01-50-44_481-jvmRun1 surefire16120653373402046441tmp surefire_014683027661381598426tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/meelesh/dev/projects/task2/target/test-classes:/home/meelesh/dev/projects/task2/target/classes:/home/meelesh/.m2/repository/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar:/home/meelesh/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar:/home/meelesh/.m2/repository/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar:/home/meelesh/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/meelesh/.m2/repository/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar:/home/meelesh/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar:/home/meelesh/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,7 +27,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/meelesh/dev/projects/task2/target/surefire/surefirebooter12342135677857457825.jar"/>
+    <property name="surefire.real.class.path" value="/home/meelesh/dev/projects/task2/target/surefire/surefirebooter5139478866752370786.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.1+12-LTS-39"/>
     <property name="user.name" value="meelesh"/>
@@ -52,6 +52,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="calculateTotalSizeTest" classname="meelesh.OutputGeneratorTest" time="0.03"/>
-  <testcase name="convertToReadableFormatTest" classname="meelesh.OutputGeneratorTest" time="0.002"/>
+  <testcase name="calculateTotalSizeTest" classname="meelesh.OutputGeneratorTest" time="0.024"/>
+  <testcase name="convertToReadableFormatTest" classname="meelesh.OutputGeneratorTest" time="0"/>
 </testsuite>

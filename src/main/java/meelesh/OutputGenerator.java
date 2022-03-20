@@ -26,10 +26,11 @@ public class OutputGenerator {
         exploreFiles();
     }
 
-
     private void exploreFiles() {
         List<String> filePaths = parseArgs.parse();
-        List<Double> fileSizes = filePaths.stream()
+        List<Double> fileSizes =
+                filePaths
+                .stream()
                 .map(fileSizeReader::getFileFromString)
                 .map(fileSizeReader::getSizeBytes)
                 .toList();
@@ -37,6 +38,11 @@ public class OutputGenerator {
         for (int i = 0; i < filePaths.size(); i++) {
             fileAndBytes.put(filePaths.get(i), fileSizes.get(i));
             totalSize += fileSizes.get(i);
+        }
+
+        if (fileAndBytes.isEmpty()) {
+            System.out.println("file/files not found");
+            System.exit(1);
         }
     }
 
@@ -47,39 +53,35 @@ public class OutputGenerator {
                 fileAndBytes
                         .entrySet()
                         .stream()
-                        .map(file -> "file name:" + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), siBase))
+                        .map(file -> "file name: " + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), siBase))
                         .forEach(System.out::println);
-            }
-
-            if (!parseArgs.isSi()) {
+            } else {
                 fileAndBytes
                         .entrySet()
                         .stream()
-                        .map(file -> "file name:" + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), defaultBase))
+                        .map(file -> "file name: " + file.getKey() + ", size: " + convertToReadableFormat(file.getValue(), defaultBase))
                         .forEach(System.out::println);
             }
             if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
-
-            return;
+            System.exit(0);
         }
 
         if (parseArgs.isSi()) {
             fileAndBytes
                     .entrySet()
                     .stream()
-                    .map(file -> "file name:" + file.getKey() + ", size: " + file.getValue() / siBase)
+                    .map(file -> "file name: " + file.getKey() + ", size: " + file.getValue() / siBase)
                     .forEach(System.out::println);
             if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
-            return;
+            System.exit(0);
         }
 
         fileAndBytes
                 .entrySet()
                 .stream()
-                .map(file -> "file name:" + file.getKey() + ", size: " + file.getValue() / defaultBase)
+                .map(file -> "file name: " + file.getKey() + ", size: " + String.format("%.2f", file.getValue() / defaultBase))
                 .forEach(System.out::println);
         if (parseArgs.isC()) System.out.println(calculateTotalSize(totalSize));
-
         System.exit(0);
     }
 
