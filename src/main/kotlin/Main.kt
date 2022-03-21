@@ -5,6 +5,7 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.path
 import java.io.File
+import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -131,7 +132,11 @@ fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: 
 
 fun produce(result: List<String>, outputFileName: String?) {
     if (!outputFileName.isNullOrEmpty()) {
-        File(Paths.get(outputFileName).toAbsolutePath().toString()).writeText(result.joinToString("\n"))
+        try {
+            File(Paths.get(outputFileName).toAbsolutePath().toString()).writeText(result.joinToString("\n"))
+        } catch (e: FileNotFoundException) {
+            println("Error: ${e.localizedMessage}")
+        }
     } else {
         for (string in result) {
             println(string)
