@@ -44,6 +44,7 @@ fun permissionsFallback(file: File, numeric: Boolean? = false): String {
 fun displayPermissions(file: File, numeric: Boolean? = false): String {
     try {
         val permissions: String = PosixFilePermissions.toString(Files.getPosixFilePermissions(file.toPath()))
+        // Convert posix permissions to number-style
         if (numeric == true) {
             val result = StringBuilder()
             var current = 0
@@ -79,7 +80,7 @@ fun formatTime(timestamp: Long): String {
     val dateFormatter = SimpleDateFormat("MMM dd HH:mm")
     return dateFormatter.format(date)
 }
-
+// Credit: https://stackoverflow.com/questions/3758606/how-can-i-convert-byte-size-into-a-human-readable-format-in-java
 fun humanReadableByteCountSI(byte: Long): String {
     var bytes = byte
     if (-1000 < bytes && bytes < 1000) {
@@ -107,7 +108,7 @@ fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolea
         result.append("${displayPermissions(file, isHuman)} ")
         result.append("${formatTime(file.lastModified())} ")
     }
-    // Print the name of directory red
+    // Print the name of directory red if we're printing into console
     if (file.isDirectory && isConsole)
         result.append("\u001b[31m${file.name}\u001b[0m")
     else
@@ -132,9 +133,11 @@ fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: 
 
 fun produce(result: List<String>, outputFileName: String?) {
     if (!outputFileName.isNullOrEmpty()) {
+        // Catch the error if file doesn't exist
         try {
             File(Paths.get(outputFileName).toAbsolutePath().toString()).writeText(result.joinToString("\n"))
         } catch (e: FileNotFoundException) {
+            // Print the error
             println("Error: ${e.localizedMessage}")
         }
     } else {
