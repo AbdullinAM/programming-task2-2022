@@ -1,12 +1,10 @@
 import org.junit.Test
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Files.createDirectory
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.time.LocalDateTime
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class Tests {
     @Test
@@ -37,14 +35,14 @@ class Tests {
 
     private fun displayPermissions(){
         val permission = displayPermissions(File("./build/tempTest/1.txt"))
-        assertTrue("-rw-" in permission)
+        assertContains(permission, "-rw-", )
     }
 
     private fun remove() {
         Files.walk(Paths.get("./build/tempTest"))
             .sorted(Comparator.reverseOrder())
             .map(Path::toFile)
-            .forEach(File::delete);
+            .forEach(File::delete)
     }
 
 
