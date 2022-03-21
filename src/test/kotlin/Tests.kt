@@ -15,7 +15,7 @@ class Tests {
         assertEquals("999 B", humanReadableByteCountSI(999))
         assertEquals("987.7 MB", humanReadableByteCountSI(987654321))
     }
-    fun prepare() {
+    private fun prepare() {
         val testPath = Files.createDirectory(Paths.get("./build/tempTest"))
 
         Files.createFile(Paths.get("${testPath.toAbsolutePath()}/1.txt"))
@@ -25,22 +25,22 @@ class Tests {
         Files.createDirectory(Paths.get("${testPath.toAbsolutePath()}/test"))
     }
 
-    fun checkSize() {
+    private fun checkSize() {
         assertEquals("1.7 kB", displaySize(File("./build/tempTest/1.txt"), true))
         assertEquals("1700 B", displaySize(File("./build/tempTest/1.txt"), false))
     }
 
-    fun permissionsFallback() {
+    private fun permissionsFallback() {
         assertEquals("-rw-", permissionsFallback(File("./build/tempTest/1.txt"), false))
         assertEquals("600", permissionsFallback(File("./build/tempTest/1.txt"), true))
     }
 
-    fun displayPermissions(){
-        var permission = displayPermissions(File("./build/tempTest/1.txt"))
+    private fun displayPermissions(){
+        val permission = displayPermissions(File("./build/tempTest/1.txt"))
         assertTrue("-rw-" in permission)
     }
 
-    fun remove() {
+    private fun remove() {
         Files.walk(Paths.get("./build/tempTest"))
             .sorted(Comparator.reverseOrder())
             .map(Path::toFile)
