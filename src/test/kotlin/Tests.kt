@@ -56,22 +56,23 @@ class Tests {
 
     @Test
     fun main() {
-        prepare()
-        checkSize()
-        permissionsFallback()
-        displayPermissions()
-        remove()
+        prepare() // Create files for testing
+        checkSize() // Check exact size of file
+        permissionsFallback() // Check permissions (use only builtin kotlin functions)
+        displayPermissions() // Check string permissions format
+        remove() // Cleanup
     }
     @Test
     fun checkArgs() {
-        assertFailsWith<NoSuchOption>{mainWithoutLibraryExceptionHandler(arrayOf("--p"))}
-        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("README.md"))}
-        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("-l", "oooo"))}
-        assertFailsWith<PrintHelpMessage>{mainWithoutLibraryExceptionHandler(arrayOf("--help"))}
-        assertFailsWith<IncorrectOptionValueCount>{mainWithoutLibraryExceptionHandler(arrayOf("-o"))}
-        mainWithoutLibraryExceptionHandler(arrayOf("-o ./testt"))
+        assertFailsWith<NoSuchOption>{mainWithoutLibraryExceptionHandler(arrayOf("--p"))} // Incorrect option
+        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("README.md"))} // Path is a file
+        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("-l", "oooo"))} // Incorrect path + correct option
+        assertFailsWith<PrintHelpMessage>{mainWithoutLibraryExceptionHandler(arrayOf("--help"))} // Exception to print help message
+        assertFailsWith<IncorrectOptionValueCount>{mainWithoutLibraryExceptionHandler(arrayOf("-o"))} // No path to output file
+        assertFailsWith<BadParameterValue> {mainWithoutLibraryExceptionHandler(arrayOf("./testt"))} // No directory test
     }
     @Test
+    // Incorrect output file path
     fun checkOutputFile() {
         val stream = ByteArrayOutputStream()
         val ps = PrintStream(stream)
