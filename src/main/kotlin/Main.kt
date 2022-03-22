@@ -3,6 +3,7 @@ import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.path
 import java.io.File
 import java.io.FileNotFoundException
@@ -146,7 +147,7 @@ fun produce(result: List<String>, outputFileName: String?) {
 
 
 class LS : CliktCommand() {
-    private val path: Path by argument("Path", "Path to folder").path(canBeFile = false).default(Paths.get("").toAbsolutePath())
+    private val path: Path by argument("Path", "Path to folder").path(canBeFile = false, mustExist = true).default(Paths.get("").toAbsolutePath())
     private val output by option("-o", help = "Output file name")
     private val long: Boolean by option("-l", help = "Turn on long mode").flag()
     private val human: Boolean by option("-h", help = "Turn on human-readable mode").flag()
@@ -164,5 +165,7 @@ class LS : CliktCommand() {
     }
 }
 
+
+fun mainWithoutLibraryExceptionHandler(args: Array<String>) = LS().parse(args)
 
 fun main(args: Array<String>) = LS().main(args)

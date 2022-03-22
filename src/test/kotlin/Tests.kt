@@ -1,10 +1,18 @@
+import com.github.ajalt.clikt.core.BadParameterValue
+import com.github.ajalt.clikt.core.IncorrectOptionValueCount
+import com.github.ajalt.clikt.core.NoSuchOption
+import com.github.ajalt.clikt.core.PrintHelpMessage
 import org.junit.Test
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.PrintStream
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+
 
 class Tests {
     @Test
@@ -35,7 +43,7 @@ class Tests {
 
     private fun displayPermissions(){
         val permission = displayPermissions(File("./build/tempTest/1.txt"))
-        assertContains(permission, "-rw-", )
+        assertContains(permission, "-rw-")
     }
 
     private fun remove() {
@@ -53,5 +61,23 @@ class Tests {
         permissionsFallback()
         displayPermissions()
         remove()
+    }
+    @Test
+    fun checkArgs() {
+        assertFailsWith<NoSuchOption>{mainWithoutLibraryExceptionHandler(arrayOf("--p"))}
+        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("README.md"))}
+        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("-l", "oooo"))}
+        assertFailsWith<PrintHelpMessage>{mainWithoutLibraryExceptionHandler(arrayOf("--help"))}
+        assertFailsWith<IncorrectOptionValueCount>{mainWithoutLibraryExceptionHandler(arrayOf("-o"))}
+        mainWithoutLibraryExceptionHandler(arrayOf("-o ./testt"))
+    }
+    @Test
+    fun checkOutputFile() {
+        val stream = ByteArrayOutputStream()
+        val ps = PrintStream(stream)
+        System.setOut(ps)
+        mainWithoutLibraryExceptionHandler(arrayOf("-o ./testt"))
+        val output = String(stream.toByteArray())
+        assertContains(output, "No such file or directory")
     }
 }
