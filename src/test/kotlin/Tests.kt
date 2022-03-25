@@ -32,17 +32,17 @@ class Tests {
     }
 
     private fun checkSize() {
-        assertEquals("1.7 kB", displaySize(File("./build/tempTest/1.txt"), true))
-        assertEquals("1700 B", displaySize(File("./build/tempTest/1.txt"), false))
+        assertEquals("1.7 kB", LSFile("./build/tempTest/1.txt").displaySize(true))
+        assertEquals("1700 B", LSFile("./build/tempTest/1.txt").displaySize(false))
     }
 
     private fun permissionsFallback() {
-        assertEquals("-rw-", permissionsFallback(File("./build/tempTest/1.txt"), false))
-        assertEquals("600", permissionsFallback(File("./build/tempTest/1.txt"), true))
+        assertEquals("-rw-", LSFile("./build/tempTest/1.txt").windowsPermissions(false))
+        assertEquals("600", LSFile("./build/tempTest/1.txt").windowsPermissions(true))
     }
 
     private fun displayPermissions(){
-        val permission = displayPermissions(File("./build/tempTest/1.txt"))
+        val permission = LSFile("./build/tempTest/1.txt").displayPermissions()
         assertContains(permission, "-rw-")
     }
 
