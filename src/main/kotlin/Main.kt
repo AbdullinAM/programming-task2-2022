@@ -17,7 +17,7 @@ import java.text.StringCharacterIterator
 import java.util.*
 
 // Get unix-ish permissions in windows
-fun permissionsFallback(file: File, numeric: Boolean? = false): String {
+fun permissionsFallback(file: File, numeric: Boolean = false): String {
     val permissions = StringBuilder("----")
     var counter = 0
     if (file.isDirectory) {
@@ -35,18 +35,16 @@ fun permissionsFallback(file: File, numeric: Boolean? = false): String {
         permissions[3] = 'x'
         counter += 1
     }
-    if (numeric == true) {
-        return "${counter}00"
-    }
-    return permissions.toString()
+    return if (numeric) "${counter}00"
+    else permissions.toString()
 }
 
 
-fun displayPermissions(file: File, numeric: Boolean? = false): String {
+fun displayPermissions(file: File, numeric: Boolean = false): String {
     try {
         val permissions: String = PosixFilePermissions.toString(Files.getPosixFilePermissions(file.toPath()))
         // Convert posix permissions to number-style
-        if (numeric == true) {
+        if (numeric) {
             val result = StringBuilder()
             var current = 0
             for (i in permissions.indices) {
@@ -95,12 +93,9 @@ fun humanReadableByteCountSI(byte: Long): String {
     return String.format("%.1f %cB", bytes / 1000.0, ci.current())
 }
 
-fun displaySize(file: File, isHuman: Boolean): String {
-    if (isHuman) {
-        return humanReadableByteCountSI(file.length())
-    }
-    return "${file.length()} B"
-}
+fun displaySize(file: File, isHuman: Boolean): String =
+    if (isHuman) humanReadableByteCountSI(file.length())
+    else "${file.length()} B"
 
 
 fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolean): String {
@@ -121,8 +116,7 @@ fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolea
 }
 
 fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: Boolean, isConsole: Boolean): List<String> {
-    var files = File(path).listFiles()?.sorted()
-    if (files === null) return listOf("")
+    var files = File(path).listFiles()?.sorted() ?: return listOf("")
     if (isReversed)
         files = files.reversed()
     val strings = mutableListOf<String>()
