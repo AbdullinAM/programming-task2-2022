@@ -65,7 +65,6 @@ class Tests {
     @Test
     fun checkArgs() {
         assertFailsWith<NoSuchOption>{mainWithoutLibraryExceptionHandler(arrayOf("--p"))} // Incorrect option
-        assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("README.md"))} // Path is a file
         assertFailsWith<BadParameterValue>{mainWithoutLibraryExceptionHandler(arrayOf("-l", "oooo"))} // Incorrect path + correct option
         assertFailsWith<PrintHelpMessage>{mainWithoutLibraryExceptionHandler(arrayOf("--help"))} // Exception to print help message
         assertFailsWith<IncorrectOptionValueCount>{mainWithoutLibraryExceptionHandler(arrayOf("-o"))} // No path to output file

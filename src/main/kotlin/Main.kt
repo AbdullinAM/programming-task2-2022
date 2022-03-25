@@ -116,7 +116,7 @@ fun displayMeta(file: File, isLong: Boolean, isHuman: Boolean, isConsole: Boolea
 }
 
 fun generateOutput(path: String, isLong: Boolean, isHuman: Boolean, isReversed: Boolean, isConsole: Boolean): List<String> {
-    var files = File(path).listFiles()?.sorted() ?: return listOf("")
+    var files = File(path).listFiles()?.sorted() ?: return listOf(displayMeta(File(path), isLong, isHuman, isConsole))
     if (isReversed)
         files = files.reversed()
     val strings = mutableListOf<String>()
