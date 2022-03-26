@@ -1,5 +1,7 @@
 package meelesh;
 
+import meelesh.du.FileSizeReader;
+import meelesh.du.SimpleFIleSizeReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -10,7 +12,7 @@ public class FIleSizeReaderTest {
 
     @Test
     public void getSizeBytesTest() {
-        FileSizeReader fileSizeReader = new FIleSizeReaderImpl();
+        FileSizeReader fileSizeReader = new SimpleFIleSizeReader();
         File file = fileSizeReader.getFileFromString(new File("").getAbsolutePath() + "/src/test/source/test/a/dsfas.pptx");
         File file1 = fileSizeReader.getFileFromString(new File("").getAbsolutePath() + "/src/test/source/test/f.docx");
         assertEquals(28966.0, fileSizeReader.getSizeBytes(file), 0.01);

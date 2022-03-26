@@ -1,5 +1,7 @@
-meelesh/ParseArgs.class
-meelesh/OutputGenerator.class
-meelesh/FileSizeReader.class
-meelesh/Entry.class
-meelesh/FIleSizeReaderImpl.class
+meelesh/Main.class
+meelesh/du/DuParametersDto.class
+meelesh/du/OutputGenerator.class
+meelesh/du/CmdLineParserCfg.class
+meelesh/du/SimpleFIleSizeReader.class
+meelesh/du/Starter.class
+meelesh/du/FileSizeReader.class

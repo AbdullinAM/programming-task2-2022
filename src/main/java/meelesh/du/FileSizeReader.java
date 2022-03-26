@@ -1,4 +1,4 @@
-package meelesh;
+package meelesh.du;
 
 import java.io.File;
 
@@ -6,6 +6,6 @@ public interface FileSizeReader {
 
     File getFileFromString(String filename);
 
-    double getSizeBytes(File file);
+    Long getSizeBytes(File file);
 
 }
