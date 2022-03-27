@@ -4,50 +4,81 @@
 package programming.task2;
 
 
+
+
 public class PackRLE {
 
-    public String packer(String content) {
-        if (content.isEmpty()) return "";
-        StringBuilder packResult = new StringBuilder();
+     public String packer(String content) {
 
-        char[] chars = content.toCharArray();
-        int sequenceLength = 0;
-        char currentChar = chars[0];
+         if (content.matches("[0-9]+")) {
+             throw new IllegalArgumentException("Input string cannot only contain digits");
+         }
 
-        for (char c : chars) {
-            if (currentChar == c) sequenceLength += 1;
-            else {
-                if (sequenceLength > 1) packResult.append(sequenceLength);
-                packResult.append(currentChar);
-                currentChar = c;
-                sequenceLength = 1;
-            }
-        }
-        if (sequenceLength > 1) packResult.append(sequenceLength);
-        packResult.append(currentChar);
+         if (content.isEmpty()) return "";
+         StringBuilder packResult = new StringBuilder();
+
+         char[] chars = content.toCharArray();
+         int sequenceLength = 0;
+         char currentChar = chars[0];
+
+         for (char c : chars) {
+             if (currentChar == c) sequenceLength += 1;
+             else if (sequenceLength > 1) {
+                 if (Character.isDigit(currentChar)) {
+                     throw new IllegalArgumentException("Input string cannot contain digit sequences");
+                 }
+                 packResult.append(sequenceLength);
+                 sequenceLength = 1;
+                 packResult.append(currentChar);
+                 currentChar = c;
+             } else {
+                 packResult.append(currentChar);
+                 currentChar = c;
+             }
+         }
+
+         if (sequenceLength > 1) {
+             if (Character.isDigit(currentChar)) {
+                 throw new IllegalArgumentException("Input string cannot contain digit sequences");
+             }
+             packResult.append(sequenceLength);
+         }
+         packResult.append(currentChar);
 
         return packResult.toString();
     }
 
+
     public String unpacker(String content) {
+        if (content.matches("[0-9]+")) {
+            throw new IllegalArgumentException("Input string cannot only contain digits");
+        }
+
         if (content.isEmpty()) return "";
         StringBuilder unpackResult = new StringBuilder();
         StringBuilder digitSequence = new StringBuilder();
 
         char[] chars = content.toCharArray();
         boolean digitFlag = false;
+        int multiplier;
         for (char c : chars) {
             if (Character.isDigit(c)) {
                 digitFlag = true;
                 digitSequence.append(c);
-            } else {
-                if (digitFlag) {
-                    unpackResult.append(new String(new char[Integer.parseInt(digitSequence.toString())]).replace('\0', c));
-                    digitFlag = false;
-                    digitSequence.setLength(0);
-                } else unpackResult.append(c);
-            }
+            } else if (digitFlag) {
+                multiplier = Integer.parseInt(digitSequence.toString());
+                while (multiplier > 0) {
+                    unpackResult.append(c);
+                    multiplier -= 1;
+                }
+                digitFlag = false;
+                digitSequence.setLength(0);
+            } else unpackResult.append(c);
         }
+        if (!digitSequence.isEmpty()) {
+            throw new IllegalArgumentException("Input string cannot end with digits");
+        }
+
         return unpackResult.toString();
     }
 }

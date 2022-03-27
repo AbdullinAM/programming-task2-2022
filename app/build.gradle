@@ -20,7 +20,8 @@ repositories {
 
 dependencies {
     // Use JUnit test framework.
-    testImplementation 'junit:junit:4.13.2'
+    testCompileOnly 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.1'
     // Use args4j library.
     implementation 'args4j:args4j:2.33'
     // This dependency is used by the application.

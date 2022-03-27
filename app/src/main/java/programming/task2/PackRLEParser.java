@@ -24,7 +24,7 @@ public class PackRLEParser {
     public static void main(String[] args) {
         try {
             new PackRLEParser().launch(args);
-        } catch (IOException e) {
+        } catch (IllegalArgumentException | IOException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -36,7 +36,7 @@ public class PackRLEParser {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("pack-rle [Pack|Unpack] [-out PackOutput] PackInput");
+            System.err.println("Example: pack-rle [-z|-u] [-out outputname.txt] inputname.txt");
             parser.printUsage(System.err);
             return;
         }
@@ -53,5 +53,4 @@ public class PackRLEParser {
             }
         }
     }
-
 }
