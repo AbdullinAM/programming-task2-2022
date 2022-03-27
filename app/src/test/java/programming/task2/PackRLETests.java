@@ -178,7 +178,6 @@ public class PackRLETests {
             PackRLEParser packRLEParser = new PackRLEParser();
             CmdLineParser cmdLineParser = new CmdLineParser(packRLEParser);
             String cmd = "-z -out src/test/resources/testRes/output1.txt src/test/resources/testRes/input9.txt";
-            System.out.println(cmd);
             cmdLineParser.parseArgument(cmd.split(" "));
 
             BufferedReader in = new BufferedReader(new FileReader("src/test/resources/testRes/input9.txt"));
