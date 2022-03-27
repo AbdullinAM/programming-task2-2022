@@ -173,7 +173,7 @@ public class PackRLETests {
             BufferedReader in = new BufferedReader(new FileReader("src/test/resources/testRes/input9.txt"));
         });
 
-        assertTrue(exception.getMessage().contains("src\\test\\resources\\testRes\\input9.txt"));
+        assertTrue(exception.getMessage().contains("input9.txt"));
     }
 
     // Exception Case 2: throws CmdLineException if the one of the options is invalid.
