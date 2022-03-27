@@ -68,6 +68,15 @@ public class PackRLETests {
         assertTrue(exception.getMessage().contains("Input string cannot contain digit sequences"));
     }
 
+    // Case 5: impossible to unpack back to the original String (sequence of 1 digit).
+    @Test
+    public void packerInputContainsDigitSequencesTest4() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            PackRLE packRLE = new PackRLE();
+            packRLE.packer("aaaaaaa1bbbbb");
+        });
+        assertTrue(exception.getMessage().contains("Input string cannot contain digit sequences"));
+    }
 
     @Test
     public void unpackerStringTest() {
@@ -164,10 +173,12 @@ public class PackRLETests {
     // Exception Case 1: throws IOException if input file is nonexistent.
     @Test
     public void inputFileNotFoundTest() {
+
         IOException exception = assertThrows(IOException.class, () -> {
             PackRLEParser packRLEParser = new PackRLEParser();
             CmdLineParser cmdLineParser = new CmdLineParser(packRLEParser);
             String cmd = "-z -out src/test/resources/testRes/output1.txt src/test/resources/testRes/input9.txt";
+            System.out.println(cmd);
             cmdLineParser.parseArgument(cmd.split(" "));
 
             BufferedReader in = new BufferedReader(new FileReader("src/test/resources/testRes/input9.txt"));

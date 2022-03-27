@@ -22,11 +22,11 @@ public class PackRLE {
          char currentChar = chars[0];
 
          for (char c : chars) {
+             if (Character.isDigit(currentChar)) {
+                 throw new IllegalArgumentException("Input string cannot contain digit sequences");
+             }
              if (currentChar == c) sequenceLength += 1;
              else if (sequenceLength > 1) {
-                 if (Character.isDigit(currentChar)) {
-                     throw new IllegalArgumentException("Input string cannot contain digit sequences");
-                 }
                  packResult.append(sequenceLength);
                  sequenceLength = 1;
                  packResult.append(currentChar);
@@ -37,12 +37,11 @@ public class PackRLE {
              }
          }
 
-         if (sequenceLength > 1) {
-             if (Character.isDigit(currentChar)) {
-                 throw new IllegalArgumentException("Input string cannot contain digit sequences");
-             }
-             packResult.append(sequenceLength);
+         if (Character.isDigit(currentChar)) {
+             throw new IllegalArgumentException("Input string cannot contain digit sequences");
          }
+
+         if (sequenceLength > 1) packResult.append(sequenceLength);
          packResult.append(currentChar);
 
         return packResult.toString();
