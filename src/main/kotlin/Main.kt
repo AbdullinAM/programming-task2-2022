@@ -16,7 +16,7 @@ import java.text.StringCharacterIterator
 import java.util.*
 
 class Command : CliktCommand() {
-    private val path: Path by argument("Path", "Path to folder").path(canBeFile = false, mustExist = true).default(Paths.get("").toAbsolutePath())
+    private val path: Path by argument("Path", "Path to folder").path(canBeFile = true, mustExist = true).default(Paths.get("").toAbsolutePath())
     private val output by option("-o", help = "Output file name")
     private val long: Boolean by option("-l", help = "Turn on long mode").flag()
     private val human: Boolean by option("-h", help = "Turn on human-readable mode").flag()
