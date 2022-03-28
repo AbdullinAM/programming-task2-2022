@@ -28,6 +28,7 @@ class Tests {
         Files.createFile(Paths.get("${testPath.toAbsolutePath()}/1.txt"))
         for (i in 1..100)
             File("./build/tempTest/1.txt").appendText("TEST EXAMPLE FILE")
+        Files.createFile(Paths.get("${testPath.toAbsolutePath()}/empty.txt"))
 
         Files.createDirectory(Paths.get("${testPath.toAbsolutePath()}/test"))
     }
@@ -44,7 +45,7 @@ class Tests {
 
     private fun displayPermissions() {
         val permission = LSFile("./build/tempTest/1.txt").displayPermissions()
-        assertContains(permission, "-rw-")
+        assertContains(permission, "-rw")
     }
 
     private fun checkEmptyFolder() {
@@ -53,9 +54,27 @@ class Tests {
         assertContentEquals(emptyList(), folder.generateOutput(false))
     }
 
+    private fun checkFolder() {
+        val folder = LS(Paths.get("./build/tempTest"))
+        assertEquals("empty.txt, \u001B[31mtest\u001B[0m, 1.txt", folder.generateOutput(true).joinToString())
+        assertEquals("empty.txt, test, 1.txt", folder.generateOutput(false).joinToString())
+
+    }
+
     private fun checkFile() {
         val file = LS(Paths.get("./build/tempTest/1.txt"))
         assertEquals(listOf("1.txt"), file.generateOutput(false))
+        val fileL = LS(Paths.get("./build/tempTest/1.txt"), isLong = true)
+        val output = fileL.generateOutput(false).joinToString()
+        assertContains(output,"-rw")
+        assertContains(output, "1700 B")
+        assertContains(output,"1.txt")
+    }
+
+    private fun checkEmptyFile() {
+        val fileL = LS(Paths.get("./build/tempTest/empty.txt"), isLong = true)
+        val output = fileL.generateOutput(false).joinToString()
+        assertContains(output, "0 B")
     }
 
     private fun remove() {
@@ -74,6 +93,8 @@ class Tests {
         displayPermissions() // Check string permissions format
         checkEmptyFolder()
         checkFile()
+        checkFolder()
+        checkEmptyFile()
         remove() // Cleanup
     }
     @Test
