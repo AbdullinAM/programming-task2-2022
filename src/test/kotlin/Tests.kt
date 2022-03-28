@@ -56,9 +56,7 @@ class Tests {
 
     private fun checkFolder() {
         val folder = LS(Paths.get("./build/tempTest"))
-        assertEquals("empty.txt, \u001B[31mtest\u001B[0m, 1.txt", folder.generateOutput(true).joinToString())
         assertEquals("empty.txt, test, 1.txt", folder.generateOutput(false).joinToString())
-
     }
 
     private fun checkFile() {
