@@ -56,7 +56,10 @@ class Tests {
 
     private fun checkFolder() {
         val folder = LS(Paths.get("./build/tempTest"))
-        assertEquals("empty.txt, test, 1.txt", folder.generateOutput(false).joinToString())
+        val output = folder.generateOutput(false).joinToString()
+        assertContains(output, "1.txt")
+        assertContains(output, "empty.txt")
+        assertContains(output, "empty.txt")
     }
 
     private fun checkFile() {
