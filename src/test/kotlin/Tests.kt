@@ -10,6 +10,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.test.assertContains
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -41,9 +42,20 @@ class Tests {
         assertEquals("600", LSFile("./build/tempTest/1.txt").windowsPermissions(true))
     }
 
-    private fun displayPermissions(){
+    private fun displayPermissions() {
         val permission = LSFile("./build/tempTest/1.txt").displayPermissions()
         assertContains(permission, "-rw-")
+    }
+
+    private fun checkEmptyFolder() {
+        val folder = LS(Paths.get("./build/tempTest/test"))
+        assertContentEquals(emptyArray(), folder.files)
+        assertContentEquals(emptyList(), folder.generateOutput(false))
+    }
+
+    private fun checkFile() {
+        val file = LS(Paths.get("./build/tempTest/1.txt"))
+        assertEquals(listOf("1.txt"), file.generateOutput(false))
     }
 
     private fun remove() {
@@ -60,6 +72,8 @@ class Tests {
         checkSize() // Check exact size of file
         permissionsFallback() // Check permissions (use only builtin kotlin functions)
         displayPermissions() // Check string permissions format
+        checkEmptyFolder()
+        checkFile()
         remove() // Cleanup
     }
     @Test
