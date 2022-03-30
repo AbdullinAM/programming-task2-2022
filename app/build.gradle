@@ -11,6 +11,21 @@ plugins {
     id 'application'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'programming.task2.Parser'
+    }
+}
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+            classifier = 'du'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -22,11 +37,14 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
+
+    // Use args4j library for parsing.
+    implementation 'args4j:args4j:2.33'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'programming.task2.App'
+    mainClass = 'programming.task2.Parser'
 }
 
 tasks.named('test') {
