@@ -4,7 +4,9 @@
 package programming.task2;
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.*;
 
 public class Du {
@@ -48,14 +50,20 @@ public class Du {
 
     // перебор всех заданных файлов для формирования ассоциативного массива с соответствием: название файла - размер
     public void fileEnumeration(List<String> list, boolean hMark, boolean siMark, boolean cMark) {
-          Map<String, String> map = new HashMap<>();
+       //   Map<String, String> map = new LinkedHashMap<>();
+
             for (int i = 0; i < list.size(); i++) {
-                map.put(list.get(i), outputSize(list.get(i), hMark, siMark, cMark));
+                System.out.print(list.get(i));
+                System.out.print(" = ");
+                System.out.println(outputSize(list.get(i), hMark, siMark, cMark));
+             //   map.put(list.get(i), outputSize(list.get(i), hMark, siMark, cMark));
             }
-        //     if (cMark) map.put("Total size", toHumanRead(totalSize, siMark, hMark, true));
-        //    return map;
-            System.out.println(map);
-            if (cMark) System.out.println(toHumanRead(totalSize, siMark, hMark, true));
+            if (cMark) {
+                System.out.print("Total size = ");
+                System.out.println(toHumanRead(totalSize, siMark, hMark, true));
+            }
+            // if (cMark) map.put("Total size", toHumanRead(totalSize, siMark, hMark, true));
+          //  return map;
     }
 
     // перевод размера согласно заданным параметрам

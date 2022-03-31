@@ -3,11 +3,15 @@
  */
 package programming.task2;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +23,142 @@ class DuTest {
 
     }
 
-    //incorrect argument
+    // file not specified
     @Test
-    public void app() throws CmdLineException {
+    public void fileNotSpecified() {
+        CmdLineException exception = assertThrows(CmdLineException.class, () -> {
+            Parser parser = new Parser();
+            CmdLineParser cmdLineParser = new CmdLineParser(parser);
+            String cmd = "-c -h";
+            cmdLineParser.parseArgument(cmd.split(" "));
+        });
+
+        assertTrue(exception.getMessage().contains("is required"));
+    }
+
+    @Test
+    public void fileNotSpecified_2() {
+        CmdLineException thrown = assertThrows(CmdLineException.class, () -> {
+            Parser parser = new Parser();
+            CmdLineParser cmdLineParser = new CmdLineParser(parser);
+            String cmd = "--si";
+            cmdLineParser.parseArgument(cmd.split(" "));
+        });
+
+        assertTrue(thrown.getMessage().contains("is required"));
+    }
+
+    //invalid options
+    @Test
+    public void invalidOptions() {
+            CmdLineException thrown = assertThrows(CmdLineException.class, () -> {
+                Parser parser = new Parser();
+                CmdLineParser cmdLineParser = new CmdLineParser(parser);
+                String cmd = "--h -c src/test/";
+                cmdLineParser.parseArgument(cmd.split(" "));
+            });
+
+            assertTrue(thrown.getMessage().contains("is not a valid option"));
+    }
+
+    @Test
+    public void invalidOptions_2() {
+        CmdLineException thrown = assertThrows(CmdLineException.class, () -> {
+            Parser parser = new Parser();
+            CmdLineParser cmdLineParser = new CmdLineParser(parser);
+            String cmd = "-h -c -si src/test/resources";
+            cmdLineParser.parseArgument(cmd.split(" "));
+        });
+
+        assertTrue(thrown.getMessage().contains("is not a valid option"));
+    }
 
 
+    //correct input options and arguments
+    @Test
+    void correctOptions() {
+        Parser parser = new Parser();
+        CmdLineParser cmdLineParser = new CmdLineParser(parser);
+        String cmd = "-h -c --si src/test/resources";
+
+        assertDoesNotThrow(() -> cmdLineParser.parseArgument(cmd.split(" ")));
+    }
+
+    @Test
+    void correctOptions_2() {
+        Parser parser = new Parser();
+        CmdLineParser cmdLineParser = new CmdLineParser(parser);
+        String cmd = "src/test/resources";
+
+        assertDoesNotThrow(() -> cmdLineParser.parseArgument(cmd.split(" ")));
+    }
+
+    @Test
+    void correctOptions_3() {
+        Parser parser = new Parser();
+        CmdLineParser cmdLineParser = new CmdLineParser(parser);
+        String cmd = "src/test/resources -h -c";
+        assertDoesNotThrow(() -> cmdLineParser.parseArgument(cmd.split(" ")));
+    }
+
+    @Test
+    void correctArguments() {
+        Parser parser = new Parser();
+        CmdLineParser cmdLineParser = new CmdLineParser(parser);
+        String cmd = "src/test/resources src/test/";
+        assertDoesNotThrow(() -> cmdLineParser.parseArgument(cmd.split(" ")));
+    }
+
+    @Test
+    void correctArguments_2() {
+        Parser parser = new Parser();
+        CmdLineParser cmdLineParser = new CmdLineParser(parser);
+        String cmd = "src/test/resources src/test/test.txt src/main/test3.txt";
+        assertDoesNotThrow(() -> cmdLineParser.parseArgument(cmd.split(" ")));
+    }
+
+    //equals actual and expected
+    @Test
+    void contentTest() {
+        String cmd = "src/test/resources -h -c";
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream pStream = new PrintStream(stream);
+        String expected = "src/test/resources = 30KB\r\n" + "Total size = 30KB\r\n";
+        PrintStream start = System.out;
+        System.setOut(pStream);
+        Parser.main(cmd.split(" "));
+        System.out.flush();
+        System.setOut(start);
+        assertEquals(stream.toString(), expected);
+    }
+
+    @Test
+    void contentTest_2() {
+        String cmd = "src/test/resources -h";
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream pStream = new PrintStream(stream);
+        String expected = "src/test/resources = 30KB\r\n";
+        PrintStream start = System.out;
+        System.setOut(pStream);
+        Parser.main(cmd.split(" "));
+        System.out.flush();
+        System.setOut(start);
+        assertEquals(stream.toString(), expected);
+    }
+
+    @Test
+    void contentTest_3() {
+        String cmd = "src/test/resources src/test/resources/test4 -h -c";
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream pStream = new PrintStream(stream);
+        String expected = "src/test/resources = 30KB\r\n" +
+                "src/test/resources/test4 = 16KB\r\n" +
+                "Total size = 47KB\r\n";
+        PrintStream start = System.out;
+        System.setOut(pStream);
+        Parser.main(cmd.split(" "));
+        System.out.flush();
+        System.setOut(start);
+        assertEquals(stream.toString(), expected);
     }
 }

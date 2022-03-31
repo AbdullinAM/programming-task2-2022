@@ -5,6 +5,8 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,20 +16,20 @@ public class Parser {
     private List<String> inputNames = new ArrayList<>();
 
     @Option(name = "-h", metaVar = "OutputFormat")
-    private boolean outputFormat;
+    private boolean h;
 
     @Option(name = "-c", metaVar = "TotalSize")
-    private boolean totalSize;
+    private boolean c;
 
     @Option(name = "--si", metaVar = "Base")
-    private boolean base;
+    private boolean si;
 
     public static void main(String[] args) {
         new Parser().launch(args);
     }
+
     private int launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
-
         try {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
@@ -40,7 +42,8 @@ public class Parser {
         Du du = new Du();
 
         try {
-            du.fileEnumeration(inputNames, outputFormat, base, totalSize);
+            //System.out.println(du.fileEnumeration(inputNames, h, si, c));
+            du.fileEnumeration(inputNames, h, si, c);
         } catch (IllegalArgumentException e) {
             return 1;
         }
