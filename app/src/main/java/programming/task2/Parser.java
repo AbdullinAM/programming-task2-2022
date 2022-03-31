@@ -4,9 +4,6 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class Parser {
         Du du = new Du();
 
         try {
-            //System.out.println(du.fileEnumeration(inputNames, h, si, c));
             du.fileEnumeration(inputNames, h, si, c);
         } catch (IllegalArgumentException e) {
             return 1;
