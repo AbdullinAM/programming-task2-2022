@@ -81,7 +81,7 @@ class Tests {
     private fun checkOutputFile() {
         val folder = LS(Paths.get("./build/tempTest"))
         val result = folder.generateOutput(false)
-        produce(result, "./build/tempTest/out.txt")
+        produce(result, File("./build/tempTest/out.txt"))
         val output = File("./build/tempTest/out.txt").readText()
         assertContains(output, "1.txt")
         assertContains(output, "empty.txt")
@@ -116,15 +116,6 @@ class Tests {
         assertFailsWith<PrintHelpMessage>{mainWithoutLibraryExceptionHandler(arrayOf("--help"))} // Exception to print help message
         assertFailsWith<IncorrectOptionValueCount>{mainWithoutLibraryExceptionHandler(arrayOf("-o"))} // No path to output file
         assertFailsWith<BadParameterValue> {mainWithoutLibraryExceptionHandler(arrayOf("./testt"))} // No directory test
-    }
-    @Test
-    // Incorrect output file path
-    fun checkIncorrectOutputFile() {
-        val stream = ByteArrayOutputStream()
-        val ps = PrintStream(stream)
-        System.setOut(ps)
-        mainWithoutLibraryExceptionHandler(arrayOf("-o ./testt"))
-        val output = String(stream.toByteArray())
-        assertContains(output, "No such file or directory")
+        assertFailsWith<BadParameterValue> { mainWithoutLibraryExceptionHandler(arrayOf("./testt", "-o", "./testt")) }
     }
 }

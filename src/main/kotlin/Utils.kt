@@ -25,15 +25,9 @@ fun humanReadableByteCountSI(byte: Long): String {
     return String.format("%.1f %cB", bytes / 1000.0, ci.current())
 }
 
-fun produce(result: List<String>, outputFileName: String?) {
-    if (!outputFileName.isNullOrEmpty()) {
-        // Catch the error if file doesn't exist
-        try {
-            File(Paths.get(outputFileName).toAbsolutePath().toString()).writeText(result.joinToString("\n"))
-        } catch (e: FileNotFoundException) {
-            // Print the error
-            println("Error: ${e.localizedMessage}")
-        }
+fun produce(result: List<String>, outputFile: File?) {
+    if (outputFile !== null) {
+        outputFile.writeText(result.joinToString("\n"))
     } else {
         for (string in result) {
             println(string)
