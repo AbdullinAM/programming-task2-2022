@@ -59,7 +59,7 @@ class Tests {
         val output = folder.generateOutput(false).joinToString()
         assertContains(output, "1.txt")
         assertContains(output, "empty.txt")
-        assertContains(output, "empty.txt")
+        assertContains(output, "test")
     }
 
     private fun checkFile() {
@@ -76,6 +76,16 @@ class Tests {
         val fileL = LS(Paths.get("./build/tempTest/empty.txt"), isLong = true)
         val output = fileL.generateOutput(false).joinToString()
         assertContains(output, "0 B")
+    }
+
+    private fun checkOutputFile() {
+        val folder = LS(Paths.get("./build/tempTest"))
+        val result = folder.generateOutput(false)
+        produce(result, "./build/tempTest/out.txt")
+        val output = File("./build/tempTest/out.txt").readText()
+        assertContains(output, "1.txt")
+        assertContains(output, "empty.txt")
+        assertContains(output, "test")
     }
 
     private fun remove() {
@@ -96,6 +106,7 @@ class Tests {
         checkFile()
         checkFolder()
         checkEmptyFile()
+        checkOutputFile()
         remove() // Cleanup
     }
     @Test
@@ -108,7 +119,7 @@ class Tests {
     }
     @Test
     // Incorrect output file path
-    fun checkOutputFile() {
+    fun checkIncorrectOutputFile() {
         val stream = ByteArrayOutputStream()
         val ps = PrintStream(stream)
         System.setOut(ps)
