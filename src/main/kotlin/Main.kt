@@ -19,7 +19,7 @@ import java.util.*
 
 class Command : CliktCommand() {
     private val path: Path by argument("Path", "Path to folder").path(canBeFile = true, mustExist = true).default(Paths.get("").toAbsolutePath())
-    private val outputFile: File? by option("-o", help = "Output file name").file(mustBeReadable = true, mustBeWritable = true)
+    private val outputFile: File? by option("-o", help = "Output file name").file()
     private val long: Boolean by option("-l", help = "Turn on long mode").flag()
     private val human: Boolean by option("-h", help = "Turn on human-readable mode").flag()
     private val reverse: Boolean by option("-r", help = "Reverse files list").flag()
