@@ -8,7 +8,6 @@ import org.kohsuke.args4j.CmdLineParser;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
-
 class DuTest {
     // file not specified
     @Test
@@ -110,7 +109,7 @@ class DuTest {
         String cmd = "src/test/resources -h -c";
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         PrintStream pStream = new PrintStream(stream);
-        String expected = "src/test/resources = 31KB\r\n" + "Total size = 31KB\r\n";
+        String expected = "src/test/resources = 31KB" + System.lineSeparator() + "Total size = 31KB" + System.lineSeparator();
         PrintStream start = System.out;
         System.setOut(pStream);
         Parser.main(cmd.split(" "));
@@ -124,7 +123,7 @@ class DuTest {
         String cmd = "src/test/resources -h";
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         PrintStream pStream = new PrintStream(stream);
-        String expected = "src/test/resources = 31KB\r\n";
+        String expected = "src/test/resources = 31KB" + System.lineSeparator();
         PrintStream start = System.out;
         System.setOut(pStream);
         Parser.main(cmd.split(" "));
@@ -138,9 +137,9 @@ class DuTest {
         String cmd = "src/test/resources src/test/resources/test4 -h -c";
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         PrintStream pStream = new PrintStream(stream);
-        String expected = "src/test/resources = 31KB\r\n" +
-                "src/test/resources/test4 = 16KB\r\n" +
-                "Total size = 47KB\r\n";
+        String expected = "src/test/resources = 31KB" + System.lineSeparator() +
+                "src/test/resources/test4 = 16KB" + System.lineSeparator() +
+                "Total size = 47KB" + System.lineSeparator();
         PrintStream start = System.out;
         System.setOut(pStream);
         Parser.main(cmd.split(" "));
