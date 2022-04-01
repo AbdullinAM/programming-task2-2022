@@ -8,6 +8,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
+
 class DuTest {
     // file not specified
     @Test
