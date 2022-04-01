@@ -115,7 +115,7 @@ class DuTest {
         Parser.main(cmd.split(" "));
         System.out.flush();
         System.setOut(start);
-        assertEquals(expected, stream.toString());
+        assertEquals(expected, stream.toString().replaceAll("/[\\r\\n]+/g","\n"));
     }
 
     @Test
@@ -129,7 +129,7 @@ class DuTest {
         Parser.main(cmd.split(" "));
         System.out.flush();
         System.setOut(start);
-        assertEquals(expected, stream.toString());
+        assertEquals(expected, stream.toString().replaceAll("/[\\r\\n]+/g","\n"));
     }
 
     @Test
@@ -145,6 +145,6 @@ class DuTest {
         Parser.main(cmd.split(" "));
         System.out.flush();
         System.setOut(start);
-        assertEquals(expected, stream.toString());
+        assertEquals(expected, stream.toString().replaceAll("/[\\r\\n]+/g","\n"));
     }
 }
