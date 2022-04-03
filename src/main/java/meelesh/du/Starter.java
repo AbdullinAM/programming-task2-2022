@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Data
 @Component
@@ -54,7 +53,7 @@ public class Starter {
         List<String> paths = new ArrayList<>();
         File[] fileList = getFileList(catalog);
         for(File file : fileList) {
-            paths.add(catalog + "/" + file.getName());
+            paths.add(Paths.get(file.getAbsolutePath()).toString());
         }
         return paths;
     }
@@ -62,14 +61,11 @@ public class Starter {
     private File[] getFileList(String dirPath) {
         File dir = new File(dirPath);
         File[] fileList = dir.listFiles();
-        return fileList == null? new File[] {}: fileList;
+        return fileList == null ? new File[] {} : fileList;
     }
 
     public static boolean isFile(String fileString) {
-        String pattern = "\\w\\.\\w";
-        Pattern r = Pattern.compile(pattern);
-        Matcher m = r.matcher(fileString);
-        return m.find() && new File(fileString).isFile();
+        return new File(fileString).isFile();
     }
 
 

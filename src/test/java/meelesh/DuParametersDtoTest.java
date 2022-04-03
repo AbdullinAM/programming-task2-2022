@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {Main.class})
 public class DuParametersDtoTest {
 
-    private CmdLineParserCfg cmdLineParserCfg;
+    private final CmdLineParserCfg cmdLineParserCfg;
 
     @Autowired
     public DuParametersDtoTest(CmdLineParserCfg cmdLineParserCfg) {

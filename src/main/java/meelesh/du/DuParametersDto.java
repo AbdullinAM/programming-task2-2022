@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class DuParametersDto {
 
-    private Starter starter;
+    private final Starter starter;
 
     @Autowired
     public DuParametersDto(Starter starter) {

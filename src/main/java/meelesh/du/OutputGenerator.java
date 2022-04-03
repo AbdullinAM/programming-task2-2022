@@ -19,14 +19,13 @@ import static java.lang.Math.pow;
 public class OutputGenerator {
 
     private FileSizeReader fileSizeReader;
-//    private Starter starter;
 
-    private final int defaultBase = 1024;
-    private final int siBase = 1000;
+    private static final int defaultBase = 1024;
+    private static final int siBase = 1000;
 
-    private final int GB = (int) pow(1024, 3);
-    private final int MB = (int) pow(1024, 2);
-    private final int KB = 1024;
+    private static final int GB = (int) pow(1024, 3);
+    private static final int MB = (int) pow(1024, 2);
+    private static final int KB = 1024;
 
     private List<String> files = new ArrayList<>();
     private final Map<String, Long> fileAndBytes = new HashMap<>();
@@ -52,8 +51,7 @@ public class OutputGenerator {
         }
 
         if (fileAndBytes.isEmpty()) {
-            System.out.println("file/files not found");
-            System.exit(1);
+            throw new IllegalArgumentException("file/files not found");
         }
     }
 

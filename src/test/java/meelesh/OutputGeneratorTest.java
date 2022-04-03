@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ContextConfiguration(classes = {Main.class})
 public class OutputGeneratorTest {
 
-    private OutputGenerator outputGenerator;
+    private final OutputGenerator outputGenerator;
 
     @Autowired
     public OutputGeneratorTest(OutputGenerator outputGenerator) {
