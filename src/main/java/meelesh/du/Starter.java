@@ -27,7 +27,7 @@ public class Starter {
         this.outputGenerator = outputGenerator;
     }
 
-    public void start() {
+    public void start() throws IllegalArgumentException {
         paths = DuParametersDto.paths;
 
         parsePaths(paths);

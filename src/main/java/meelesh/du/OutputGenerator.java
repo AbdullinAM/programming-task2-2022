@@ -37,7 +37,7 @@ public class OutputGenerator {
         this.fileSizeReader = fileSizeReader;
     }
 
-    public void exploreFiles() {
+    public void exploreFiles() throws IllegalArgumentException {
         List<Long> fileSizes =
                 files
                 .stream()
@@ -55,7 +55,7 @@ public class OutputGenerator {
         }
     }
 
-    public void print() {
+    public void print() throws IllegalArgumentException {
         exploreFiles();
         Function<Long, String> formatPrinter =
                 DuParametersDto.h? this::convertToReadableFormat: this::convertToDefaultFormat;

@@ -30,7 +30,7 @@ public class DuParametersDto {
     @Argument(multiValued = true, usage="files or directories")
     public static List<String> paths = new ArrayList<>();
 
-    public void run() {
+    public void run() throws IllegalArgumentException {
         starter.start();
     }
 

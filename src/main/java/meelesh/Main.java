@@ -23,7 +23,7 @@ public class Main {
         try {
             parserCfg.cmdLineParser().parseArgument(args);
             parserCfg.getDuParametersDto().run();
-        } catch (CmdLineException e) {
+        } catch (CmdLineException  | IllegalArgumentException e) {
             System.err.println(e.getMessage());
             parserCfg.cmdLineParser().printUsage(System.err);
         }
