@@ -21,7 +21,7 @@ class Output(
         val result = mutableListOf<String>()
         if (long) {
             for (file in fileList) {
-                result.add(LongFormat(file.toString()).getLong(file, human) + " " + file.name)
+                result.add(LongFormat(file.toString()).getLong(human) + " " + file.name)
             }
         } else
             for (file in fileList) {

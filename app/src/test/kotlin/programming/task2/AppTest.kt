@@ -13,12 +13,12 @@ class AppTest {
     fun getPermission() {
         assertEquals(
             "r-x",
-            LongFormat("${directoryTest}\\onlyRead.txt").getPermission(File("${directoryTest}\\onlyRead.txt"),true)
+            LongFormat("${directoryTest}\\onlyRead.txt").getPermission(true)
         )
         assertEquals(
             "rwx",
             LongFormat(
-                "${directoryTest}\\kotlin.jpg").getPermission(File("${directoryTest}\\kotlin.jpg"), true)
+                "${directoryTest}\\kotlin.jpg").getPermission(true)
         )
     }
 }

@@ -6,8 +6,9 @@ import java.text.StringCharacterIterator
 import java.util.*
 
 
-class LongFormat(private val file: String): File(file) {
-    fun getPermission(file: File, human: Boolean): String {
+class LongFormat(private val filePath: String): File(filePath) {
+    private val file = File(filePath)
+    fun getPermission(human: Boolean): String {
         val resultSymbolic = StringBuilder()
         var resultNumeric = 0
         if (file.canRead()) {
@@ -50,24 +51,24 @@ class LongFormat(private val file: String): File(file) {
         return Date(file.lastModified()).toString()
     }
 
-    private fun size(file: File, human: Boolean): String {
+    private fun size(human: Boolean): String {
         if (file.isDirectory) return "folder"
         if (human) return humanReadableByteCountSI(file.length())
         return (file.length()).toString()
     }
 
-    fun getLong(file: File, human: Boolean): String {
+    fun getLong(human: Boolean): String {
         val result = StringBuilder()
         if (human)
-            result.append(getPermission(file, true))
-        else result.append(getPermission(file, false))
+            result.append(getPermission(true))
+        else result.append(getPermission(false))
         result.append(" ")
         result.append(lastModifiedTime(file))
         result.append(" ")
         if (human)
-            result.append(size(file,true))
+            result.append(size(true))
         else {
-            result.append(size(file, false))
+            result.append(size(false))
             result.append(" bytes")
         }
         return result.toString()
