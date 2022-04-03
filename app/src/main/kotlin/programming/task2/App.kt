@@ -7,7 +7,6 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.file
 
 
-
 class Tool: CliktCommand() {
     private val directory by argument(help = "Directory or file").file()
     private val output by option("-o", help = "Name of output file")

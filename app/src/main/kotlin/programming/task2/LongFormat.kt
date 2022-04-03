@@ -34,7 +34,7 @@ class LongFormat(private val filePath: String): File(filePath) {
     }
 
     //https://stackoverflow.com/questions/3758606/how-can-i-convert-byte-size-into-a-human-readable-format-in-java
-    private fun humanReadableByteCountSI(byte: Long): String {
+    fun humanReadableByteCountSI(byte: Long): String {
         var bytes = byte
         if (-1000 < bytes && bytes < 1000) {
             return "$bytes B"
@@ -47,14 +47,14 @@ class LongFormat(private val filePath: String): File(filePath) {
         return String.format("%.1f %cB", bytes / 1000.0, ci.current())
     }
 
-    private fun lastModifiedTime(file: File): String {
+    fun lastModifiedTime(): String {
         return Date(file.lastModified()).toString()
     }
 
-    private fun size(human: Boolean): String {
+    fun size(human: Boolean): String {
         if (file.isDirectory) return "folder"
         if (human) return humanReadableByteCountSI(file.length())
-        return (file.length()).toString()
+        return (file.length()).toString() + " B"
     }
 
     fun getLong(human: Boolean): String {
@@ -63,14 +63,12 @@ class LongFormat(private val filePath: String): File(filePath) {
             result.append(getPermission(true))
         else result.append(getPermission(false))
         result.append(" ")
-        result.append(lastModifiedTime(file))
+        result.append(lastModifiedTime())
         result.append(" ")
         if (human)
             result.append(size(true))
-        else {
+        else
             result.append(size(false))
-            result.append(" bytes")
-        }
         return result.toString()
     }
 }
