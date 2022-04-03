@@ -18,7 +18,7 @@ class Tests {
             i = true,
             r = false,
             regex = "ВОЛКИ",
-            filename = "D:/programming-task2-2022/src/test/resources/input.txt"
+            filename = "src/test/resources/input.txt"
         )
         assertEquals(expected, actual)
     }
@@ -34,7 +34,7 @@ class Tests {
             i = true,
             r = true,
             regex = "[1-7]+",
-            filename = "D:/programming-task2-2022/src/test/resources/input.txt"
+            filename = "src/test/resources/input.txt"
         )
         assertEquals(expected, actual)
     }
@@ -50,7 +50,7 @@ class Tests {
             i = true,
             r = false,
             regex = "представьте",
-            filename = "D:/programming-task2-2022/src/test/resources/input1.txt"
+            filename = "src/test/resources/input1.txt"
         )
         assertEquals(expected, actual)
     }
@@ -66,20 +66,20 @@ class Tests {
             i = false,
             r = true,
             regex = "[а-я]+\\,",
-            filename = "D:/programming-task2-2022/src/test/resources/input1.txt"
+            filename = "src/test/resources/input1.txt"
         )
         assertEquals(expected, actual)
     }
 
     @Test
     fun testErrors() {
-        assertFailsWith<NoSuchOption> { main(arrayOf("-k", "word", "D:/programming-task2-2022/src/test/resources/input.txt")) }
-        assertFailsWith<BadParameterValue> { main(arrayOf("-r", "-i", "word", "D:/programming-task2-2022/src/test/resources/NoInput.txt")) }
+        assertFailsWith<NoSuchOption> { main(arrayOf("-k", "word", "src/test/resources/input.txt")) }
+        assertFailsWith<BadParameterValue> { main(arrayOf("-r", "-i", "word", "src/test/resources/NoInput.txt")) }
         assertFailsWith<MissingArgument> { main(arrayOf("-r", "-i", "word")) }
-        assertFailsWith<MissingArgument> { main(arrayOf("-r", "-i", "D:/programming-task2-2022/src/test/resources/input.txt")) }
+        assertFailsWith<MissingArgument> { main(arrayOf("-r", "-i", "src/test/resources/input.txt")) }
         assertFailsWith<PrintHelpMessage> { main(arrayOf("--help")) }
         assertFailsWith<PrintHelpMessage> { main(arrayOf("-h")) }
-        assertFailsWith<UsageError> { main(arrayOf("word", "D:/programming-task2-2022/src/test/resources/input.txt", "D:/programming-task2-2022/src/test/resources/input.txt")) }
-        assertFailsWith<BadParameterValue> { main(arrayOf("word", "D:/programming-task2-2022/src/TESACSA/resources/input.txt")) }
+        assertFailsWith<UsageError> { main(arrayOf("word", "src/test/resources/input.txt", "src/test/resources/input.txt")) }
+        assertFailsWith<BadParameterValue> { main(arrayOf("word", "src/TESACSA/resources/input.txt")) }
     }
 }
