@@ -1,0 +1,4 @@
+rwx Sun Apr 03 17:31:26 MSK 2022 folder emptyFolder
+rwx Sun Apr 03 17:33:05 MSK 2022 6,4 kB kotlin.jpg
+r-x Sun Apr 03 17:30:23 MSK 2022 0 B onlyRead.txt
+rwx Sun Apr 03 18:06:18 MSK 2022 0 B output.txt
