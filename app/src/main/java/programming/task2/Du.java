@@ -18,8 +18,7 @@ public class Du {
         }
     }
 
-    List<String> PostFix = Arrays.asList("B", "KB", "MB", "GB");
-    long totalSize = 0;
+    private static final List<String> PostFix = Arrays.asList("B", "KB", "MB", "GB");
 
     // Размер папки
       public long directorySize(File directory) {
@@ -38,16 +37,18 @@ public class Du {
         File file = new File(inputName);
         long size = 0;
 
+        if (!file.exists()) throw new IllegalArgumentException();
+
         if (file.isFile()) size = file.length();
         else if (file.isDirectory()) size = directorySize(file);
-
-        if (!file.exists()) throw new IllegalArgumentException();
 
         return toHumanRead(size, siMark, hMark, cMark);
     }
 
     // перебор всех заданных файлов и вывод
+    private long totalSize = 0;
     public void fileEnumeration(List<String> list, boolean hMark, boolean siMark, boolean cMark) {
+        totalSize = 0;
             for (int i = 0; i < list.size(); i++) {
                 System.out.print(list.get(i));
                 System.out.print(" = ");

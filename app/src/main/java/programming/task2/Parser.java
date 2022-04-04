@@ -41,6 +41,7 @@ public class Parser {
         try {
             du.fileEnumeration(inputNames, h, si, c);
         } catch (IllegalArgumentException e) {
+            System.err.println("Файла нет");
             return 1;
         }
         return 0;
