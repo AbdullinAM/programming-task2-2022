@@ -42,3 +42,4 @@ tasks.shadowJar {
     archiveBaseName.set("ls")
     archiveClassifier.set("")
 }
+

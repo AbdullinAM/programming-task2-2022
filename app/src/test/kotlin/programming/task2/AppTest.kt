@@ -37,9 +37,9 @@ class AppTest {
 
     @Test
     fun humanReadableByteCountSI() {
-        assertEquals("5,0 kB", LongFormat("").humanReadableByteCountSI(5000))
-        assertEquals("1,3 MB", LongFormat("").humanReadableByteCountSI(1300000))
-        assertEquals("2,2 GB", LongFormat("").humanReadableByteCountSI(2200000000))
+        assertEquals("5.0 kB", LongFormat("").humanReadableByteCountSI(5000))
+        assertEquals("1.3 MB", LongFormat("").humanReadableByteCountSI(1300000))
+        assertEquals("2.2 GB", LongFormat("").humanReadableByteCountSI(2200000000))
     }
 
     @Test
@@ -56,7 +56,7 @@ class AppTest {
 
     @Test
     fun size() {
-        assertEquals("6,4 kB", LongFormat("${directoryTest}/kotlin.jpg").size(true))
+        assertEquals("6.364 kB", LongFormat("${directoryTest}/kotlin.jpg").size(true))
         assertEquals("1336 B", LongFormat("${directoryTest}/substrings_in1.txt").size(false))
     }
 

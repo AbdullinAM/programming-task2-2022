@@ -5,7 +5,6 @@ import java.text.CharacterIterator
 import java.text.StringCharacterIterator
 import java.util.*
 
-
 class LongFormat(private val filePath: String): File(filePath) {
     private val file = File(filePath)
     fun getPermission(human: Boolean): String {
@@ -44,7 +43,7 @@ class LongFormat(private val filePath: String): File(filePath) {
             bytes /= 1000
             ci.next()
         }
-        return String.format("%.1f %cB", bytes / 1000.0, ci.current())
+        return "${bytes / 1000.0} ${ci.current()}B"
     }
 
     fun lastModifiedTime(): String {
