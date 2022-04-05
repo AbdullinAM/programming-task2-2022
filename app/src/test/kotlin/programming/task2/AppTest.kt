@@ -16,17 +16,9 @@ class AppTest {
     @Test
     fun getPermission() {
         assertEquals(
-            "r-x",
-            LongFormat("${directoryTest}/onlyRead.txt").getPermission(true)
-        )
-        assertEquals(
             "rwx",
             LongFormat(
                 "${directoryTest}/kotlin.jpg").getPermission(true)
-        )
-        assertEquals(
-            "500",
-            LongFormat("${directoryTest}/onlyRead.txt").getPermission(false)
         )
         assertEquals(
             "700",
@@ -64,15 +56,15 @@ class AppTest {
     fun output() {
         assertEquals(listOf("File/folder is not found"), Output(File("${directoryTest}/test")).create())
         assertEquals(listOf(
-            "1.txt",
-            "2.txt",
-            "3.txt"
+            "testA.txt",
+            "testB.txt",
+            "testC.txt"
         ), Output(File("${directoryTest}/testFolder")).create())
         Output(File("${directoryTest}/testFolder")).fileOutput("${directoryTest}/output.txt")
         assertFileContent("${directoryTest}/output.txt",
-        """1.txt
-            |2.txt
-            |3.txt
+        """testA.txt
+            |testB.txt
+            |testC.txt
         """.trimMargin())
     }
 }
