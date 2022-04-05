@@ -40,18 +40,6 @@ class AppTest {
     }
 
     @Test
-    fun lastModifiedTime() {
-//        assertEquals(
-//            "Sun Apr 03 17:31:26 MSK 2022",
-//            LongFormat("${directoryTest}/emptyFolder").lastModifiedTime()
-//        )
-        assertEquals(
-            "Sun Sep 12 22:36:52 MSK 2021",
-            LongFormat("${directoryTest}/substrings_in1.txt").lastModifiedTime()
-        )
-    }
-
-    @Test
     fun size() {
         assertEquals("6.364 kB", LongFormat("${directoryTest}/kotlin.jpg").size(true))
         assertEquals("1313 B", LongFormat("${directoryTest}/substrings_in1.txt").size(false))
