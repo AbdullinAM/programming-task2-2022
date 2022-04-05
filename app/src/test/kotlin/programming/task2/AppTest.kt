@@ -16,7 +16,7 @@ class AppTest {
     @Test
     fun getPermission() {
         assertEquals(
-            "rwx",
+            "---",
             LongFormat(
                 "${directoryTest}/kotlin.jpg").getPermission(true)
         )
