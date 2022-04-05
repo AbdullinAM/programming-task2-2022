@@ -6,7 +6,7 @@ runs:
     - name: Run the Gradle test task
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: test
+        arguments: test --info
     - name: Check test report exists # if project has no tests then report is not generated
       shell: bash
       run: |
