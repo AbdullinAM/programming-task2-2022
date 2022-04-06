@@ -13,7 +13,7 @@ class FindTest {
     @Test
     public void testNormalUsage() {
         String ud = System.getProperty("user.dir");
-        System.out.println(ud);
+        System.err.println(ud);
         String resourcesDir = ud + "\\src\\test\\resources";
 
         /*With Extension + recursive*/
