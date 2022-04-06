@@ -45,6 +45,23 @@ public class FinderLauncher {
         }
     }
 
+    public String[] parseAndLaunchForTest(String[] args) {
+        CmdLineParser cmdParser = new CmdLineParser(this);
+
+        try {
+            cmdParser.parseArgument(args);
+        } catch (CmdLineException e) {
+            System.out.println(e.getMessage());
+            cmdParser.printUsage(System.err);
+            return new String[]{};
+        }
+
+        Finder finder = new Finder(pathToDir, fileName, recursive);
+        String[] results = finder.initSearch();
+
+        return results;
+    }
+
 }
 
 

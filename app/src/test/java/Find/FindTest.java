@@ -16,7 +16,7 @@ class FindTest {
         String resourcesDir = ud + "\\src\\test\\resources";
 
         /*With Extension + recursive*/
-        String[] t1 = new Finder("src","One.txt", true).initSearch();
+        String[] t1 = new FinderLauncher().parseAndLaunchForTest("-d src One.txt -r".split("\s+"));
         String[] t2 = {"src\\test\\resources\\Dir\\One.txt",
                 "src\\test\\resources\\Dir\\Deeper\\One.txt",
                 "src\\test\\resources\\Dir\\Deeper\\Deepest\\One.txt"};

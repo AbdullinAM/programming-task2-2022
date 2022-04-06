@@ -19,7 +19,7 @@ public class Finder {
 
     public String[] initSearch(){
         if (pathToDir.equals("")){
-            pathToDir = System.getProperty("user.dir")+pathToDir;
+            pathToDir = System.getProperty("user.dir");
         }
         String[] result = null;
         if (fileName.contains(".")) {result = find(true);} else {result = find(false);}
