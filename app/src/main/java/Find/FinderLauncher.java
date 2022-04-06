@@ -12,7 +12,7 @@ public class FinderLauncher {
     @Option(name="-r",usage="Also search in subdirectories")
     private boolean recursive;
 
-    @Option(name="-d", usage="Directory to search in",metaVar="Directory")
+    @Option(name="-d",usage="Directory to search in",metaVar="Directory")
     private String pathToDir = "";
 
     @Argument(required = true, usage = "Name of file", metaVar = "fileName")

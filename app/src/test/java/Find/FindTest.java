@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class FindTest {
     @Test
     public void testNormalUsage() {
-        String resourcesDir = System.getProperty("user.dir") + "\\src\\test\\resources";
+        String ud = System.getProperty("user.dir");
+        String resourcesDir = ud + "\\src\\test\\resources";
 
         /*With Extension + recursive*/
         String[] t1 = new Finder(resourcesDir, "One.txt", true).initSearch();
@@ -52,7 +53,32 @@ class FindTest {
         for (int i = 0; i < t7.length; i++) {
             assertEquals(t7[i], t8[i]);
         }
+        /* Not absolute path*/
+        String[] t9 = new Finder("\\src", "One", true).initSearch();
+        String[] t10 = {resourcesDir + "\\Dir\\One.txt",
+                resourcesDir + "\\Dir\\Deeper\\One",
+                resourcesDir + "\\Dir\\Deeper\\One.txt",
+                resourcesDir + "\\Dir\\Deeper\\Deepest\\One.txt"};
+        assertEquals(t9.length, t10.length);
+        for (int i = 0; i < t10.length; i++) {
+            assertEquals(t9[i], t10[i]);
+        }
+        /*Path not given, consider user.dir as target dir*/
+        String[] t11 = new Finder("", "One", true).initSearch();
+        String[] t12 = {ud+"\\build\\resources\\test\\Dir\\One.txt",
+                ud+"\\build\\resources\\test\\Dir\\Deeper\\One",
+                ud+"\\build\\resources\\test\\Dir\\Deeper\\One.txt",
+                ud+"\\build\\resources\\test\\Dir\\Deeper\\Deepest\\One.txt",
+                resourcesDir + "\\Dir\\One.txt",
+                resourcesDir + "\\Dir\\Deeper\\One",
+                resourcesDir + "\\Dir\\Deeper\\One.txt",
+                resourcesDir + "\\Dir\\Deeper\\Deepest\\One.txt"};
+        for (int i = 0; i < t12.length; i++) {
+            assertEquals(t11[i], t12[i]);
+        }
+        assertEquals(t11.length, t12.length);
     }
+
 
 
     @Test
