@@ -30,9 +30,9 @@ public class Find {
 
         find(new File(directory));
 
-        for (int i = 0; i < fileList.size(); i++) {
-            System.out.println(fileList.get(i));
-        }
+//        for (int i = 0; i < fileList.size(); i++) {
+//            System.out.println(fileList.get(i));
+//        }
 
         if (fileList.isEmpty()) {
             System.out.println("file does not exist");
