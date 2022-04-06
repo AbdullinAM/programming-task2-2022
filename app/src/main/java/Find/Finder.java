@@ -18,9 +18,7 @@ public class Finder {
     }
 
     public String[] initSearch(){
-        /*If given not absolute path, making it absolute
-          If path doesn't given, consider user.dir as a pathToDir*/
-        if (!pathToDir.matches("([A-Z]:\\\\)([A-z0-9]+\\\\)+([A-z0-9]+)") || pathToDir.equals("")){
+        if (pathToDir.equals("")){
             pathToDir = System.getProperty("user.dir")+pathToDir;
         }
         String[] result = null;
