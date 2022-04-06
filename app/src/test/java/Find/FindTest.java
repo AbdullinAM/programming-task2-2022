@@ -13,21 +13,20 @@ class FindTest {
     @Test
     public void testNormalUsage() {
         String ud = System.getProperty("user.dir");
-        System.err.println(ud);
         String resourcesDir = ud + "\\src\\test\\resources";
 
         /*With Extension + recursive*/
-        String[] t1 = new Finder(resourcesDir, "One.txt", true).initSearch();
+        String[] t1 = new Finder("\\src","One.txt", true).initSearch();
         String[] t2 = {resourcesDir + "\\Dir\\One.txt",
                 resourcesDir + "\\Dir\\Deeper\\One.txt",
                 resourcesDir + "\\Dir\\Deeper\\Deepest\\One.txt"};
-        assertEquals(t1.length, t2.length);
+        assertEquals(t2.length, t1.length);
         for (int i = 0; i < t1.length; i++) {
             assertEquals(t1[i], t2[i]);
         }
 
         /*Without Extension + recursive*/
-        String[] t3 = new Finder(resourcesDir, "One", true).initSearch();
+        String[] t3 = new Finder("\\src", "One", true).initSearch();
         String[] t4 = {resourcesDir + "\\Dir\\One.txt",
                 resourcesDir + "\\Dir\\Deeper\\One",
                 resourcesDir + "\\Dir\\Deeper\\One.txt",
@@ -38,7 +37,7 @@ class FindTest {
         }
 
         /*With Extension*/
-        String[] t5 = new Finder(resourcesDir + "\\Dir", "Multiple.txt", false).initSearch();
+        String[] t5 = new Finder("\\src\\test\\resources\\Dir", "Multiple.txt", false).initSearch();
         String[] t6 = {resourcesDir + "\\Dir\\Multiple.txt"};
         assertEquals(t5.length, t6.length);
         for (int i = 0; i < t5.length; i++) {
@@ -46,7 +45,7 @@ class FindTest {
         }
 
         /*Without Extension*/
-        String[] t7 = new Finder(resourcesDir + "\\Dir", "Multiple", false).initSearch();
+        String[] t7 = new Finder("\\src\\test\\resources\\Dir", "Multiple", false).initSearch();
         String[] t8 = {resourcesDir + "\\Dir\\Multiple",
                 resourcesDir + "\\Dir\\Multiple.txt",
                 resourcesDir + "\\Dir\\Multiple.zip"};
