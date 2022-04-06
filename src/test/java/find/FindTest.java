@@ -25,7 +25,7 @@ class FindTest {
         } // преобразование в стринг результатов
         Assertions.assertEquals(expected, actual);
     }
-
+    ;
     @Test
     void test2 () throws IOException {
         ArrayList<String> expected = new ArrayList<>();
