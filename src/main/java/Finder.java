@@ -22,14 +22,12 @@ public class Finder {
         }
         String[] result = null;
         if (fileName.contains(".")) {result = find(true);} else {result = find(false);}
+
         return result;
     }
 
     private String[] find( boolean ExtNeeded ) {
-        /* Sorting files and directories */
-        ArrayList<String> results = new ArrayList<>();
-        ArrayList<String> namesOfFiles = new ArrayList<>();
-        ArrayList<String> namesOfDirs = new ArrayList<>();
+        List<String> results;
         if (new File(pathToDir).listFiles() == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
