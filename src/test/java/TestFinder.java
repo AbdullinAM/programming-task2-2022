@@ -84,9 +84,9 @@ public class TestFinder {
 //
 //        assertTrue(thrown.getMessage().contains("No such directory or directory is empty."));
 //    }
-//
-//    @Test(expected = IllegalArgumentException.class)
-//    public void whenExceptionThrown_thenExpectationSatisfied() {
-//        new Finder("QWERTY", "1", false).initSearch();
-//    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenExceptionThrown_thenExpectationSatisfied() {
+        new Finder("QWERTY", "1", false).initSearch();
+    }
 }
