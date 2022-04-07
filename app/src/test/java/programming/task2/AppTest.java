@@ -28,7 +28,7 @@ public class AppTest {
         File[] files = file.listFiles();
         assertEquals("1,36 MB", Base.calculateFullSize(files));
     }
-    //
+
 
     @Test
     public void newBase() {
