@@ -24,10 +24,10 @@ public class AppTest {
 
     @Test
     public void sizeOfAllFiles() {
-        File file = new File("C://nastya//test//");
+        File file = new File("src//test//resources");
         File[] files = file.listFiles();
         assertEquals("1,36 MB", Base.calculateFullSize(files));
-    }//
+    }
 
 
     @Test
