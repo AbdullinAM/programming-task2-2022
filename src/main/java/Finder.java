@@ -9,6 +9,7 @@ public class Finder {
 
     private final boolean recursive;
 
+
     public Finder(String pathToDir, String fileName, boolean recursive) {
         this.pathToDir = pathToDir;
         this.fileName = fileName;
@@ -29,34 +30,34 @@ public class Finder {
         ArrayList<String> results = new ArrayList<>();
         ArrayList<String> namesOfFiles = new ArrayList<>();
         ArrayList<String> namesOfDirs = new ArrayList<>();
-        if (new File(pathToDir) == null) {
+        if (new File(pathToDir).listFiles() == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
-        File fi = new File(pathToDir);
 
-        for (File file : fi.listFiles()) {
-            if (file.isFile()) { namesOfFiles.add(file.getName());}
-            else { namesOfDirs.add(file.getName());}
-        }
-        /* Finding essential files */
-        String name = null;
-        for (String nameOfFile : namesOfFiles) {
-            if (ExtNeeded) {
-                name = nameOfFile;
-            } else {
-                name = nameOfFile.split("\\.")[0];
-            }
-            if (name.equals(fileName)) {
-                results.add(pathToDir + "\\" + nameOfFile);
-            }
-        }
-        /* Initializing recursive search */
-        if (!namesOfDirs.isEmpty() && recursive) {
-            for (String dir : namesOfDirs){
-                Finder f = new Finder(pathToDir+"\\"+dir, fileName, recursive);
-                results.addAll(List.of(f.find(ExtNeeded)));
-            }
-        }
+        File[] filesList = new File(pathToDir).listFiles();
+
+        results = recursiveFind(filesList, pathToDir, fileName, ExtNeeded, recursive);
+
         return results.toArray(new String[0]);
+    }
+    private ArrayList<String> recursiveFind (File[] filesArray, String pathToDir, String fileName, Boolean extNeeded, Boolean recursive) {
+        ArrayList<String> results = new ArrayList<>();
+        for (File file : filesArray){
+            if (file.isDirectory() && recursive){
+                List<String> r = recursiveFind(file.listFiles(), pathToDir+"/"+file.getName(), fileName, extNeeded, recursive);
+                for (String s : r) {
+                    results.add(s);
+                }
+            } else {
+                String name = file.getName();
+                if (!extNeeded) {
+                    name = name.split("\\.")[0];
+                }
+                if (name.equals(fileName)) {
+                    results.add(pathToDir+"/"+file.getName());
+                }
+            }
+        }
+        return results;
     }
 }
