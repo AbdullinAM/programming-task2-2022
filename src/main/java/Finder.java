@@ -29,7 +29,7 @@ public class Finder {
         ArrayList<String> results = new ArrayList<>();
         ArrayList<String> namesOfFiles = new ArrayList<>();
         ArrayList<String> namesOfDirs = new ArrayList<>();
-        if (new File(pathToDir).listFiles() == null) {
+        if (new File(pathToDir) == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
         for (File file : new File(pathToDir).listFiles()) {
