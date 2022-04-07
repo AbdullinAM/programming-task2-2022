@@ -73,17 +73,17 @@ public class TestFinder {
 //
 //
 //
-////    @Test
-////    public void testExceptions (){
-////        /*Wrong dir name*/
-////        IllegalArgumentException thrown = assertThrows(
-////                IllegalArgumentException.class,
-////                () -> new Finder("QWERTY", "1", false).initSearch(),
-////                "Expected doThing() to throw, but it didn't"
-////        );
-////
-////        assertTrue(thrown.getMessage().contains("No such directory or directory is empty."));
-////    }
+//    @Test
+//    public void testExceptions (){
+//        /*Wrong dir name*/
+//        IllegalArgumentException thrown = assertThrows(
+//                IllegalArgumentException.class,
+//                () -> new Finder("QWERTY", "1", false).initSearch(),
+//                "Expected doThing() to throw, but it didn't"
+//        );
+//
+//        assertTrue(thrown.getMessage().contains("No such directory or directory is empty."));
+//    }
 //
 //    @Test(expected = IllegalArgumentException.class)
 //    public void whenExceptionThrown_thenExpectationSatisfied() {
