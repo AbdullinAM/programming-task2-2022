@@ -47,12 +47,14 @@ class PackRLE {
                 var numberOfLetters = 0
                 var nextNumber = indexInString
                 if (i[nextNumber].isDigit()) {
+                    var c = 0
                     while (i[nextNumber].isDigit()) {
                         numberOfLetters = numberOfLetters * 10 + i[nextNumber].digitToInt()
                         nextNumber++
+                        c++
                     }
                     for (j in 1..numberOfLetters) result.append(i[nextNumber])
-                    indexInString += nextNumber + 1
+                    indexInString += c + 1
                 } else {
                     result.append(i[indexInString])
                     indexInString++
@@ -63,10 +65,10 @@ class PackRLE {
         return result.dropLast(1).toString()
     }
 
-    fun assembleFile(toPack:Boolean, inputName: String, outputName: String?) {
+    fun assembleFile(toPack:Boolean, toUnpack: Boolean, outputName: String?, inputName: String) {
         val writer = File(outputName ?: inputName).bufferedWriter()
         if (toPack) writer.write(compression(inputName))
-        else  writer.write(expansion(inputName))
+        if (toUnpack) writer.write(expansion(inputName))
         writer.close()
     }
 }

@@ -4,8 +4,7 @@
 
 package programming.task2
 
-import com.github.ajalt.clikt.core.NoSuchOption
-import com.github.ajalt.clikt.core.PrintHelpMessage
+import com.github.ajalt.clikt.core.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -40,7 +39,7 @@ class Test {
 
        assertEquals("BB\nKKK\nNNN\nM", packRLE.expansion("src/test/resources/expansion2.txt"))
 
-       assertEquals("MMMNNNC\n\nIIIJ\n\n\nO",
+       assertEquals("MMMNNNBBBC\n\nIIIJ\n\n\nO",
            packRLE.expansion("src/test/resources/expansion3.txt"))
    }
 
@@ -51,26 +50,32 @@ class Test {
         val expectedOne = "HE2LO IT IS T3EST\n" +
                 "2M2P 2N\n" +
                 "\n" +
-                "3A"
-        packRLE.assembleFile(true, "src/test/resources/input1.txt",
-            "src/test/resources/output1.txt")
+                "2A"
+        packRLE.assembleFile(toPack = true, toUnpack = false, inputName = "src/test/resources/input1.txt",
+            outputName = "src/test/resources/output1.txt"
+        )
         assertEquals(expectedOne, actualOne)
 
         val actualTwo = File("src/test/resources/output2.txt").readText()
-        val expectedTwo = "BBBBB III\n" +
+        val expectedTwo = "BBBBB IIITTTTTTTTTTTTTT\n" +
                 "\n" +
                 "WWWWWB"
-        packRLE.assembleFile(false,"src/test/resources/input2.txt",
-            "src/test/resources/output2.txt")
+        packRLE.assembleFile(toPack = false, toUnpack = true, inputName = "src/test/resources/input2.txt",
+            outputName = "src/test/resources/output2.txt"
+        )
         assertEquals(expectedTwo, actualTwo)
    }
 
     @Test
     fun errors() {
-        assertFailsWith<NoSuchOption>{ main(arrayOf("-y"))}
-        assertFailsWith<NoSuchOption>{ main(arrayOf("-j"))}
-        assertFailsWith<NoSuchOption>{ main(arrayOf("-x"))}
-        assertFailsWith<PrintHelpMessage>{main(arrayOf("--help"))}
-        assertFailsWith<PrintHelpMessage>{main(arrayOf("-h"))}
+        assertFailsWith<NoSuchOption> { main(arrayOf("-y", "src/test/resources/output3", "src/test/resources/input3"))}
+        assertFailsWith<NoSuchOption> { main(arrayOf("-x", "src/test/resources/output3", "src/test/resources/input3"))}
+        assertFailsWith<UsageError> { main(arrayOf("-u", "src/test/resources/output3", "src/test/resources/output3")) }
+        assertFailsWith<PrintHelpMessage> { main(arrayOf("--help")) }
+        assertFailsWith<PrintHelpMessage> { main(arrayOf("-h")) }
+        assertFailsWith<MissingArgument> { main(arrayOf("-z", "-out", "src/test/resources/output3")) }
+        assertFailsWith<MissingArgument> { main(arrayOf("-u", "-out", "src/test/resources/input3")) }
+        assertFailsWith<BadParameterValue> { main(arrayOf("-z", "-out", "src/test/resources/output3",
+            "src/test/resources/impood")) }
     }
 }
