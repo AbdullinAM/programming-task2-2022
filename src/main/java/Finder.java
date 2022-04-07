@@ -17,35 +17,25 @@ public class Finder {
     }
 
     public String[] initSearch(){
-        if (pathToDir.equals("")){
-            pathToDir = System.getProperty("user.dir");
-        }
-        String[] result = null;
-        if (fileName.contains(".")) {result = find(true);} else {result = find(false);}
-
-        return result;
-    }
-
-    private String[] find( boolean ExtNeeded ) {
-        List<String> results;
         if (new File(pathToDir).listFiles() == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
-
+        List<String> result;
         File[] filesList = new File(pathToDir).listFiles();
+        if (fileName.contains(".")) {
+            result = recursiveFind(filesList, pathToDir, fileName, true, recursive);
+        } else {
+            result = recursiveFind(filesList, pathToDir, fileName, false, recursive);}
 
-        results = recursiveFind(filesList, pathToDir, fileName, ExtNeeded, recursive);
-
-        return results.toArray(new String[0]);
+        return result.toArray(new String[0]);
     }
+
+
     private ArrayList<String> recursiveFind (File[] filesArray, String pathToDir, String fileName, Boolean extNeeded, Boolean recursive) {
         ArrayList<String> results = new ArrayList<>();
         for (File file : filesArray){
             if (file.isDirectory() && recursive){
-                List<String> r = recursiveFind(file.listFiles(), pathToDir+"/"+file.getName(), fileName, extNeeded, recursive);
-                for (String s : r) {
-                    results.add(s);
-                }
+                results.addAll(recursiveFind(file.listFiles(), pathToDir+"/"+file.getName(), fileName, extNeeded, recursive));
             } else {
                 String name = file.getName();
                 if (!extNeeded) {

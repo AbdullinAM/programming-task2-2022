@@ -43,26 +43,10 @@ public class TestFinder {
                 "testResources/Dir/Multiple.zip"};
         assertEquals(t7.length, t8.length);
         for (int i = t7.length; i == 0; i++) {
-            assertEquals(t7[i], t8[i]);
+            assertEquals(t8[i], t7[i]);
         }
 
-//        /*Path not given, consider user.dir as target dir*/
-//        String[] t11 = new Finder("", "One", true).initSearch();
-//        String UD = System.getProperty("user.dir");
-//        String[] t12 = {
-//                "src/test/resources/Dir/One.txt",
-//                "src/test/resources/Dir/Deeper/One",
-//                "src/test/resources/Dir/Deeper/One.txt",
-//                "src/test/resources/Dir/Deeper/Deepest/One.txt"};
-//        for (int i = 0; i < t12.length; i++) {
-//            assertEquals(t12[i], t11[i]);
-//        }
-//        assertEquals(t11.length, t12.length);
     }
-
-
-
-
 
     @Test(expected = IllegalArgumentException.class)
     public void whenExceptionThrown_thenExpectationSatisfied() {
