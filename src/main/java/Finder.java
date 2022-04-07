@@ -32,7 +32,9 @@ public class Finder {
         if (new File(pathToDir) == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
-        for (File file : new File(pathToDir).listFiles()) {
+        File fi = new File(pathToDir);
+
+        for (File file : fi.listFiles()) {
             if (file.isFile()) { namesOfFiles.add(file.getName());}
             else { namesOfDirs.add(file.getName());}
         }
