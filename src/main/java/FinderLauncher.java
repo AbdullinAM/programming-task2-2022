@@ -40,6 +40,7 @@ public class FinderLauncher {
         }
     }
 
+    /*"Public" instance of parseAndLaunch for testing*/
     public String[] parseAndLaunchForTest(String[] args) {
         CmdLineParser cmdParser = new CmdLineParser(this);
 

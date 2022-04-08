@@ -17,6 +17,7 @@ public class Finder {
     }
 
     public String[] initSearch(){
+        if (pathToDir.isBlank()) {pathToDir = System.getProperty("user.dir");}
         if (new File(pathToDir).listFiles() == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }

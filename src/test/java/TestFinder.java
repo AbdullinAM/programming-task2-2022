@@ -49,7 +49,7 @@ public class TestFinder {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenExceptionThrown_thenExpectationSatisfied() {
+    public void testExceptionThrowing() {
         new Finder("QWERTY", "1", false).initSearch();
     }
 }
