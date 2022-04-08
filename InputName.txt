@@ -1,0 +1,9 @@
+Приложение должно запускаться так:
+java –jar appname.jar –ie InputEncoding word
+-oe OutputEncoding InputName OutputName
+ Здесь
+◦ word InputEncoding – кодировка входного файла
+◦ OutputEncoding – требуемая кодпировка
+◦ InputName – имя входного файла
+◦ OutputName – Пребуемое имя выходного файла
+файл
