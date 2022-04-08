@@ -17,7 +17,11 @@ public class Finder {
     }
 
     public String[] initSearch(){
-        if (pathToDir.isBlank()) {pathToDir = System.getProperty("user.dir");}
+
+        if (pathToDir.isBlank()) {
+            pathToDir = System.getProperty("user.dir");
+        }
+
         if (new File(pathToDir).listFiles() == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
@@ -33,17 +37,20 @@ public class Finder {
 
 
     private ArrayList<String> recursiveFind (File[] filesArray, String pathToDir, String fileName, Boolean extNeeded, Boolean recursive) {
+        String slash = "/";
+        if (System.getProperty("os.name").contains("Windows")){slash = "\\";}
         ArrayList<String> results = new ArrayList<>();
+
         for (File file : filesArray){
             if (file.isDirectory() && recursive){
-                results.addAll(recursiveFind(file.listFiles(), pathToDir+"/"+file.getName(), fileName, extNeeded, recursive));
+                results.addAll(recursiveFind(file.listFiles(), pathToDir+slash+file.getName(), fileName, extNeeded, recursive));
             } else {
                 String name = file.getName();
                 if (!extNeeded) {
                     name = name.split("\\.")[0];
                 }
                 if (name.equals(fileName)) {
-                    results.add(pathToDir+"/"+file.getName());
+                    results.add(pathToDir+slash+file.getName());
                 }
             }
         }
