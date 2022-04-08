@@ -2,16 +2,8 @@ package programming.task2;
 
 import picocli.CommandLine;
 import java.io.File;
-
 import static programming.task2.Base.calculateFileSize;
 import static programming.task2.Base.calculateFullSize;
-
-
-public class Du {
-    public static void main(String[] args) {
-        new CommandLine(new HelloCommand()).execute( "--si", "-h", "C://nastya//test//text2.txt");
-    }
-}
 
     @CommandLine.Command(name = "du")
     class HelloCommand implements Runnable {
@@ -31,12 +23,16 @@ public class Du {
 
         @Override
         public void run() {
-            for (File file : files) {
-                if (!file.exists()) System.exit(1);
+//            for (File file : files) {
+//                if (!file.exists()) System.exit(1);
                 if (h) System.out.println(calculateFileSize(files.length, 1024));
                 if (c) System.out.println(calculateFullSize(files));
                 if (si) System.out.println(calculateFileSize(files.length, 1000));
 
             }
         }
-    }
+   // }
+
+
+
+

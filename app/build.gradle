@@ -28,13 +28,25 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
-//task customFatJar(type: Jar) {
-//    manifest.from jar.manifest
-//    classifier = 'du'
-//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-//    with jar
-//}
-//artifacts {archives customFatJar}
+jar {
+    manifest {
+        attributes 'Main-Class': 'programming.task2.Main'
+    }
+}
+
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    classifier = 'Main'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+artifacts {
+    archives fatJar
+}
 
 test {
     useJUnitPlatform()
@@ -49,5 +61,6 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
 
 
