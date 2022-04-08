@@ -3,8 +3,6 @@
  */
 package programming.task2;
 
-
-
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 

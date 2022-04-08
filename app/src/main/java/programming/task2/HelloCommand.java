@@ -5,7 +5,8 @@ import java.io.File;
 import static programming.task2.Base.calculateFileSize;
 import static programming.task2.Base.calculateFullSize;
 
-    @CommandLine.Command(name = "du")
+
+//    @CommandLine.Command(name = "du")
     class HelloCommand implements Runnable {
 
         @CommandLine.Option(names = "-h", description = "The size will be in human-readable format.")
@@ -25,13 +26,18 @@ import static programming.task2.Base.calculateFullSize;
         public void run() {
 //            for (File file : files) {
 //                if (!file.exists()) System.exit(1);
-                if (h) System.out.println(calculateFileSize(files.length, 1024));
-                if (c) System.out.println(calculateFullSize(files));
-                if (si) System.out.println(calculateFileSize(files.length, 1000));
-
+                if (h) System.out.println(calculateFileSize(files[0].length(), 1024));
+                if (c) {
+                    double sum = 0.0;
+                    for (File file : files) {
+                        sum += file.length();
+                    }
+                    System.out.println(calculateFullSize(files));
+                    }
+                if (si) System.out.println(calculateFileSize(files[0].length(), 1000));
+                }
             }
-        }
-   // }
+
 
 
 
