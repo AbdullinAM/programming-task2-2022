@@ -92,7 +92,7 @@ class AppTest {
             List<String> result = new Grep().GrepRg(false,  false, "файл.+", "InutName.txt");
         });
     }
-/* тест не работает, тк мы ловим ошибку, она ловится до того, как мы можем ее проверить
+/* тест не работает, тк мы ловим ошибку, она ловится до того, как мы можем ее проверить.
         @Test void testCmdLineExceptionCatch() throws IOException {
         CmdLineException exception = assertThrows(CmdLineException.class, () -> {
             Parse.main("-v -i -r word word InputName.txt ".split("\s"));
