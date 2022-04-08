@@ -37,14 +37,14 @@ tasks.named('test') {
 }
 jar {
     manifest {
-        attributes 'Main-Class': 'programming.task2.Grep'
+        attributes 'Main-Class': 'programming.task2.Parse'
     }
 }
 
 
 task fatJar(type: Jar) {
     manifest.from jar.manifest
-    classifier = 'Grep'
+    classifier = 'Parse'
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
