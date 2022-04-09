@@ -23,8 +23,7 @@ import static programming.task2.Base.calculateFullSize;
 
         @Override
         public void run() {
-//            for (File file : files) {
-//                if (!file.exists()) System.exit(1);
+
                 if (h) System.out.println(calculateFileSize(files[0].length(), 1024));
                 if (c) {
                     double sum = 0.0;
