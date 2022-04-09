@@ -21,7 +21,7 @@ public class AppTest {
         assertEquals("9,95 KB", Base.calculateFileSize(10187, 1024));
         assertEquals("456,00 B", Base.calculateFileSize(456, 1024));
     }
-//
+
     @Test
     public void sizeOfAllFiles() {
         File file = new File("src//test//resources");
