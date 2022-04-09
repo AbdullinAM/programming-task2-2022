@@ -6,7 +6,6 @@ import static programming.task2.Base.calculateFileSize;
 import static programming.task2.Base.calculateFullSize;
 
 
-//    @CommandLine.Command(name = "du")
     class HelloCommand implements Runnable {
 
         @CommandLine.Option(names = "-h", description = "The size will be in human-readable format.")
