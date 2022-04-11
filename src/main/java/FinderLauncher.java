@@ -7,16 +7,30 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FinderLauncher {
     @Option(name="-r",usage="Also search in subdirectories")
     private boolean recursive;
 
     @Option(name="-d",usage="Directory to search in",metaVar="Directory")
-    private String pathToDir = "";
+    private String pathToDir = ".";
 
     @Argument(required = true, usage = "Name of file", metaVar = "fileName")
     private String fileName;
+
+    public boolean isRecursive() {
+        return recursive;
+    }
+
+    public String getPathToDir() {
+        return pathToDir;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 
     public static void main(String[] args) {
         try {
@@ -37,16 +51,13 @@ public class FinderLauncher {
             return;
         }
 
-        if (pathToDir.isBlank()) {
-            pathToDir = Paths.get(".").toString();
-        }
 
         File[] targetDir = new File(pathToDir).listFiles();
         if (targetDir == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
         Finder finder = new Finder(targetDir, fileName, recursive);
-        String[] results = finder.initSearch();
+        List<String> results = finder.initSearch();
 
 
         for (String str : results){
@@ -55,7 +66,7 @@ public class FinderLauncher {
     }
 
     /*"Public" instance of parseAndLaunch for testing*/
-    public String[] parseAndLaunchForTest(String[] args) {
+    public List<String> parseAndLaunchForTest(String[] args) {
         CmdLineParser cmdParser = new CmdLineParser(this);
 
         try {
@@ -63,20 +74,16 @@ public class FinderLauncher {
         } catch (CmdLineException e) {
             System.out.println(e.getMessage());
             cmdParser.printUsage(System.err);
-            return new String[]{};
+            return new ArrayList<>();
         }
 
-        if (pathToDir.isBlank()) {
-            pathToDir = Paths.get(".").toString();
-        }
 
         File[] targetDir = new File(pathToDir).listFiles();
         if (targetDir == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
         }
         Finder finder = new Finder(targetDir, fileName, recursive);
-        String[] results = finder.initSearch();
 
-        return results;
+        return finder.initSearch();
     }
 }

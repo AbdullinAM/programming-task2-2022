@@ -16,16 +16,15 @@ public class Finder {
         this.recursive = recursive;
     }
 
-    public String[] initSearch(){
+    public List<String> initSearch(){
         List<String> result;
         result = recursiveFind(targetDir, fileName, recursive);
-        return result.toArray(new String[0]);
+        return result;
     }
 
 
     private ArrayList<String> recursiveFind (File[] targetDir, String fileName, Boolean recursive) {
         ArrayList<String> results = new ArrayList<>();
-
         for (File file : targetDir){
             if (file.isDirectory() && recursive){
                 results.addAll(recursiveFind(file.listFiles(), fileName, recursive));
