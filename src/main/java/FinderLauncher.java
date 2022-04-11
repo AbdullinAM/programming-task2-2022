@@ -3,6 +3,11 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class FinderLauncher {
     @Option(name="-r",usage="Also search in subdirectories")
     private boolean recursive;
@@ -32,8 +37,17 @@ public class FinderLauncher {
             return;
         }
 
-        Finder finder = new Finder(pathToDir, fileName, recursive);
+        if (pathToDir.isBlank()) {
+            pathToDir = Paths.get(".").toString();
+        }
+
+        File[] targetDir = new File(pathToDir).listFiles();
+        if (targetDir == null) {
+            throw new IllegalArgumentException("No such directory or directory is empty.");
+        }
+        Finder finder = new Finder(targetDir, fileName, recursive);
         String[] results = finder.initSearch();
+
 
         for (String str : results){
             System.out.println(str);
@@ -52,7 +66,15 @@ public class FinderLauncher {
             return new String[]{};
         }
 
-        Finder finder = new Finder(pathToDir, fileName, recursive);
+        if (pathToDir.isBlank()) {
+            pathToDir = Paths.get(".").toString();
+        }
+
+        File[] targetDir = new File(pathToDir).listFiles();
+        if (targetDir == null) {
+            throw new IllegalArgumentException("No such directory or directory is empty.");
+        }
+        Finder finder = new Finder(targetDir, fileName, recursive);
         String[] results = finder.initSearch();
 
         return results;

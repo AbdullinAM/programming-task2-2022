@@ -41,7 +41,7 @@ public class TestFinder {
 
     @Test(expected = IllegalArgumentException.class)
     public void testExceptionThrowing() {
-        new Finder("QWERTY", "1", false).initSearch();
+        new FinderLauncher().parseAndLaunchForTest("-d qwerty Multiple".split("\s+"));
     }
 
     private boolean arraysEquals(String[] arr, String[] arr2){

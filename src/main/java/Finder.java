@@ -3,54 +3,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Finder {
-    private String pathToDir;
+    private File[] targetDir;
 
     private final String fileName;
 
     private final boolean recursive;
 
 
-    public Finder(String pathToDir, String fileName, boolean recursive) {
-        this.pathToDir = pathToDir;
+    public Finder(File[] targetDir, String fileName, boolean recursive) {
+        this.targetDir = targetDir;
         this.fileName = fileName;
         this.recursive = recursive;
     }
 
     public String[] initSearch(){
-
-        if (pathToDir.isBlank()) {
-            pathToDir = System.getProperty("user.dir");
-        }
-
-        if (new File(pathToDir).listFiles() == null) {
-            throw new IllegalArgumentException("No such directory or directory is empty.");
-        }
         List<String> result;
-        File[] filesList = new File(pathToDir).listFiles();
-        if (fileName.contains(".")) {
-            result = recursiveFind(filesList, pathToDir, fileName, true, recursive);
-        } else {
-            result = recursiveFind(filesList, pathToDir, fileName, false, recursive);}
-
+        result = recursiveFind(targetDir, fileName, recursive);
         return result.toArray(new String[0]);
     }
 
 
-    private ArrayList<String> recursiveFind (File[] filesArray, String pathToDir, String fileName, Boolean extNeeded, Boolean recursive) {
-        String slash = "/";
-        if (System.getProperty("os.name").contains("Windows")){slash = "\\";}
+    private ArrayList<String> recursiveFind (File[] targetDir, String fileName, Boolean recursive) {
         ArrayList<String> results = new ArrayList<>();
 
-        for (File file : filesArray){
+        for (File file : targetDir){
             if (file.isDirectory() && recursive){
-                results.addAll(recursiveFind(file.listFiles(), pathToDir+slash+file.getName(), fileName, extNeeded, recursive));
+                results.addAll(recursiveFind(file.listFiles(), fileName, recursive));
             } else {
                 String name = file.getName();
-                if (!extNeeded) {
-                    name = name.split("\\.")[0];
-                }
-                if (name.equals(fileName)) {
-                    results.add(pathToDir+slash+file.getName());
+                if (name.equals(fileName) || name.split("\\.")[0].equals(fileName)) {
+                    results.add(file.getPath());
                 }
             }
         }
