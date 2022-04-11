@@ -42,7 +42,7 @@
                 </configuration>
             </plugin>
 
-<!--            Creating manifest file-->
+<!--            Creating main manifest file-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

@@ -1,5 +1,3 @@
-import junit.framework.AssertionFailedError;
-import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -20,7 +18,7 @@ public class TestFinder {
 
 
         /*Without Extension + recursive*/
-        String[] t3 = new Finder("testResources", "One", true).initSearch();
+        String[] t3 = new FinderLauncher().parseAndLaunchForTest("-d testResources One -r".split("\s+"));
         String[] t4 = {"testResources"+slash+"Dir"+slash+"Deeper"+slash+"Deepest"+slash+"One.txt",
                 "testResources"+slash+"Dir"+slash+"Deeper"+slash+"One",
                 "testResources"+slash+"Dir"+slash+"Deeper"+slash+"One.txt",
@@ -28,12 +26,12 @@ public class TestFinder {
         assertTrue(arraysEquals(t3, t4));
 
         /*With Extension*/
-        String[] t5 = new Finder("testResources", "Multiple.txt", false).initSearch();
+        String[] t5 = new FinderLauncher().parseAndLaunchForTest("-d testResources Multiple.txt".split("\s+"));
         String[] t6 = {"testResources"+slash+"Multiple.txt"};
         assertTrue(arraysEquals(t5, t6));
 
         /*Without Extension*/
-        String[] t7 = new Finder("testResources", "Multiple", false).initSearch();
+        String[] t7 = new FinderLauncher().parseAndLaunchForTest("-d testResources Multiple".split("\s+"));
         String[] t8 = {"testResources"+slash+"Multiple",
                 "testResources"+slash+"Multiple.txt",
                 "testResources"+slash+"Multiple.zip"};
