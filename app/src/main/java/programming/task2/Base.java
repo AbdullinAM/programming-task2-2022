@@ -1,9 +1,12 @@
 package programming.task2;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
-public class Base {
+public abstract class Base {
 
     static String[] fileSizeUnits = {"B", "KB", "MB", "GB"};
     public static String calculateFileSize(double bytes, int standard) {
@@ -14,8 +17,19 @@ public class Base {
             }
             bytes = bytes / standard;
         }
-        return String.format("%.2f", bytes) + " " + fileSizeUnits[index];
+
+        Locale locale  = new Locale("en", "US");
+        String pattern = "##.##";
+
+        DecimalFormat decimalFormat = (DecimalFormat)
+                NumberFormat.getNumberInstance(locale);
+        decimalFormat.applyPattern(pattern);
+
+        return decimalFormat.format(bytes) + " " + fileSizeUnits[index];
     }
+
+
+
 
     public static String calculateFullSize(File[] files) {
         double sumBytes = 0.0;

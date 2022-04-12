@@ -9,6 +9,5 @@ public class Main {
         cmd.getCommandSpec().parser().collectErrors(true);
         CommandLine.ParseResult parseResult = cmd.parseArgs();
         new CommandLine(new HelloCommand()).execute(String.valueOf(parseResult));
-
     }
 }
