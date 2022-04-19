@@ -17,8 +17,17 @@ public class Finder {
     }
 
     public List<String> initSearch(){
-        List<String> result;
-        result = recursiveFind(targetDir, fileName, recursive);
+        List<String> result = new ArrayList<>();
+        for (File file : targetDir){
+            if (file.isDirectory() && recursive) {
+                result.addAll(recursiveFind(targetDir, fileName, recursive));
+            } else {
+                String name = file.getName();
+                if (name.equals(fileName) || name.split("\\.")[0].equals(fileName)) {
+                    result.add(file.getName());
+                }
+            }
+        }
         return result;
     }
 

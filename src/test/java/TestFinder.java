@@ -35,15 +35,15 @@ public class TestFinder {
         /*With Extension*/
         List<String> t5 = new FinderLauncher().parseAndLaunchForTest("-d testResources Multiple.txt".split("\s+"));
         List<String> t6 = new ArrayList<>();
-        t6.add("testResources"+slash+"Multiple.txt");
+        t6.add("Multiple.txt");
         assertTrue(arraysEquals(t6, t5));
 
         /*Without Extension*/
         List<String> t7 = new FinderLauncher().parseAndLaunchForTest("-d testResources Multiple".split("\s+"));
         List<String> t8 = new ArrayList<>(List.of(new String[]
-                {"testResources" + slash + "Multiple",
-                "testResources" + slash + "Multiple.txt",
-                "testResources" + slash + "Multiple.zip"}));
+                {"Multiple",
+                "Multiple.txt",
+                "Multiple.zip"}));
         assertTrue(arraysEquals(t8, t7));
 
     }

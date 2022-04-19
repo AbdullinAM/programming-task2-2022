@@ -77,7 +77,6 @@ public class FinderLauncher {
             return new ArrayList<>();
         }
 
-
         File[] targetDir = new File(pathToDir).listFiles();
         if (targetDir == null) {
             throw new IllegalArgumentException("No such directory or directory is empty.");
