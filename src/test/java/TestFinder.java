@@ -91,7 +91,7 @@ public class TestFinder {
         for (int i = 0; i < arr.size(); i++) {
             boolean sameFound = false;
             for (String s : arr) {
-                if (arr.get(i).equals(s)) {
+                if (arr2.get(i).equals(s)) {
                     sameFound = true;
                     break;
                 }
