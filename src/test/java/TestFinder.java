@@ -68,7 +68,7 @@ public class TestFinder {
     }
 
     @Test
-    public void testCmdLineException() {
+    public void testTooManyArguments() {
         CmdLineException exception = assertThrows(CmdLineException.class, () -> {
             FinderLauncher classUnderTest = new FinderLauncher();
             CmdLineParser cmdLineParser = new CmdLineParser(classUnderTest);
@@ -78,13 +78,21 @@ public class TestFinder {
     }
 
     @Test
-    public void testWrongPath() {
+    public void testNotExistingDir() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-            new FinderLauncher().parseAndLaunchForTest("-d qwerty Multiple".split("\s+"))
+            new FinderLauncher().parseAndLaunchForTest("-d DDD Multiple".split("\s+"))
         );
-        assertTrue(exception.getMessage().contains("No such directory or directory is empty."));
+        assertTrue(exception.getMessage().contains("Provided directory doesn't exist.\nYou are trying to reach : " +
+                System.getProperty("user.dir") + "/DDD"));
     }
 
+    @Test
+    public void testProvidedDirIsFile() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                new FinderLauncher().parseAndLaunchForTest("-d testResources/Multiple fileName".split("\s+"))
+        );
+        assertTrue(exception.getMessage().contains("Provided directory is a file"));
+    }
 
     private boolean arraysEquals(List<String> arr, List<String> arr2){
         if (arr.size() != arr2.size()) {return false;}

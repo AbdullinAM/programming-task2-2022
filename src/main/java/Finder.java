@@ -17,30 +17,30 @@ public class Finder {
     }
 
     public List<String> initSearch(){
-        List<String> result = new ArrayList<>();
+        List<String> results = new ArrayList<>();
         for (File file : targetDir){
             if (file.isDirectory() && recursive) {
-                result.addAll(recursiveFind(targetDir, fileName, recursive));
+                results.addAll(recursiveFind(targetDir, fileName));
             } else {
                 String name = file.getName();
                 if (name.equals(fileName) || name.split("\\.")[0].equals(fileName)) {
-                    result.add(file.getName());
+                    results.add(file.getName()); //По тз выводим только имя если файл в указанной папке
                 }
             }
         }
-        return result;
+        return results;
     }
 
 
-    private ArrayList<String> recursiveFind (File[] targetDir, String fileName, Boolean recursive) {
+    private ArrayList<String> recursiveFind (File[] targetDir, String fileName) {
         ArrayList<String> results = new ArrayList<>();
         for (File file : targetDir){
-            if (file.isDirectory() && recursive){
-                results.addAll(recursiveFind(file.listFiles(), fileName, recursive));
+            if (file.isDirectory()){
+                results.addAll(recursiveFind(file.listFiles(), fileName));
             } else {
                 String name = file.getName();
                 if (name.equals(fileName) || name.split("\\.")[0].equals(fileName)) {
-                    results.add(file.getPath());
+                    results.add(file.getPath()); //Выводим путь так как файл найден в подпапке
                 }
             }
         }

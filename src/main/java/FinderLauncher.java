@@ -4,9 +4,6 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,22 +47,24 @@ public class FinderLauncher {
             cmdParser.printUsage(System.err);
             return;
         }
-
-
-        File[] targetDir = new File(pathToDir).listFiles();
+        File dir = new File(pathToDir);
+        if (!dir.exists()){
+            throw new IllegalArgumentException("Provided directory doesn't exist.\nYou are trying to reach : " +
+                    System.getProperty("user.dir") + "/" +
+                    pathToDir);
+        }
+        File[] targetDir = dir.listFiles();
         if (targetDir == null) {
-            throw new IllegalArgumentException("No such directory or directory is empty.");
+            throw new IllegalArgumentException("Provided directory is a file");
         }
         Finder finder = new Finder(targetDir, fileName, recursive);
         List<String> results = finder.initSearch();
-
-
         for (String str : results){
             System.out.println(str);
         }
     }
 
-    /*"Public" instance of parseAndLaunch for testing*/
+    /*"Public" instance of parseAndLaunch for testing. Returns results instead of printing them.*/
     public List<String> parseAndLaunchForTest(String[] args) {
         CmdLineParser cmdParser = new CmdLineParser(this);
 
@@ -77,9 +76,15 @@ public class FinderLauncher {
             return new ArrayList<>();
         }
 
-        File[] targetDir = new File(pathToDir).listFiles();
+        File dir = new File(pathToDir);
+        if (!dir.exists()){
+            throw new IllegalArgumentException("Provided directory doesn't exist.\nYou are trying to reach : " +
+                    System.getProperty("user.dir") + "/" +
+                    pathToDir);
+        }
+        File[] targetDir = dir.listFiles();
         if (targetDir == null) {
-            throw new IllegalArgumentException("No such directory or directory is empty.");
+            throw new IllegalArgumentException("Provided directory is a file");
         }
         Finder finder = new Finder(targetDir, fileName, recursive);
 
