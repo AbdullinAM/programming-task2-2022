@@ -7,20 +7,18 @@ import java.io.*;
 
 
 public class RLEParser {
-    @Option(name = "-z", metaVar = "Pack", forbids = {"-u"})
-    private boolean toPack;
+    @Option(name = "-z", metaVar = "Packager", forbids = {"-u"})
+    private boolean toPackager;
 
-    @Option(name = "-u", metaVar = "Unpack", forbids = {"-z"})
-    private boolean toUnpack;
+    @Option(name = "-u", metaVar = "Unpackager", forbids = {"-z"})
+    private boolean toUnpackager;
 
-    @Option(name = "-out", metaVar = "PackOutput")
+    @Option(name = "-out", metaVar = "PackagerOutput")
     private String outputName;
 
-    @Argument(required = true, metaVar = "PackInput")
+    @Argument(required = true, metaVar = "PackagerInput")
     private String inputName;
 
-    public RLEParser() {
-    }
 
 
     public static void main(String[] args) {
@@ -47,7 +45,7 @@ public class RLEParser {
         try (BufferedReader in = new BufferedReader(new FileReader(inputName))) {
             try (BufferedWriter out = new BufferedWriter(new FileWriter(outputName))) {
                 while ((line = in.readLine()) != null) {
-                    if (toPack) out.write(RLE.packager(line));
+                    if (toPackager) out.write(RLE.packager(line));
                     else out.write(RLE.unpackager(line));
                     out.newLine();
                 }

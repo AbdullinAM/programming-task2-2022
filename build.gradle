@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -18,4 +18,29 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'RLE.RLEParser'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'RLE.RLEParser'
+    }
+}
+
+
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    classifier = 'RLE_pack'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+artifacts {
+    archives fatJar
 }

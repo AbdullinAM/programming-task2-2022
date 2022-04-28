@@ -1,34 +1,73 @@
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RLE {
-    public String packager(String words){
-        LinkedHashMap<String, Integer> charsCount = new LinkedHashMap<>();
-        //StringBuilder charLine = new StringBuilder();
-        char[] character = words.toCharArray();
-        for (char ch : character){
-            if (!charsCount.containsKey(ch)) {
-                charsCount.put(String.valueOf(ch),1);
-            }
-        }
-        List<Map.Entry<String, Integer>> charsSet = new ArrayList<>(charsCount.entrySet());
-        for (char ch : character){
-            for (int i=0;i == charsCount.size(); i++){
-                Map.Entry<String, Integer> charr = charsSet.get(i);
-                if (charr.getKey().equals(String.valueOf(ch))) charsCount.computeIfPresent(charr.getKey(), (k, v) -> ++v);
+    public String packager(String words) {
+        LinkedHashMap<Character, Integer> charsCount = new LinkedHashMap<>();
+        StringBuilder charLine = new StringBuilder();
+
+        if (words.isEmpty()) return "";
+
+        char[] characters = words.toCharArray();
+        char previousChar = characters[0];
+
+        charsCount.put(previousChar, 0);
+        char lastChar = characters[0];
+        int lastCharCount = 0;
+        for (char ch : characters) {
+            if (Character.isDigit(ch))
+                throw new IllegalArgumentException("Input string cannot contain digit sequences");
+            if (!charsCount.containsKey(ch)) charsCount.put(ch, 1);
+            if (ch != previousChar) {
+                if (charsCount.get(ch) > 1) {
+                    charLine.append(charsCount.get(ch));
+                    charLine.append(ch);
+                    charsCount.put(ch, 1);
+                    previousChar = ch;
                 }
-            }
-        return charsSet.toString();
+                if (charsCount.get(previousChar) > 1) {
+                    charLine.append(charsCount.get(previousChar));
+                    charLine.append(previousChar);
+                    charsCount.put(previousChar, 1);
+                    previousChar = ch;
+                } else {
+                    charLine.append(previousChar);
+                    charsCount.put(previousChar, 1);
+                    previousChar = ch;
+                }
+            } else charsCount.put(ch, charsCount.get(ch) + 1);
+            lastChar = ch;
+            lastCharCount = charsCount.get(ch);
         }
-    public String unpackager(String words){
-        //идти по строке символ-колличество и воспроизводить
+        if (lastCharCount > 1) {
+            charLine.append(lastCharCount);
+            charLine.append(lastChar);
+        } else charLine.append(lastChar);
+
+        return charLine.toString();
+    }
+
+    public String unpackager(String words) {
         StringBuilder unpack = new StringBuilder();
-        for (int i=0; i==words.length()-2;i=i+2){
-            int quantity = words.charAt(i+1);
-            do unpack.append(words.charAt(i));
-            while (quantity != 0);
+        char[] characters = words.toCharArray();
+        List<Integer> digitCollector = new ArrayList<>();
+        int number = 0;
+        for (char ch : characters) {
+            if (Character.isDigit(ch)) {
+                digitCollector.add(Integer.parseInt(String.valueOf(ch)));
+            } else if (!digitCollector.isEmpty()) {
+                for (int digit : digitCollector) {
+                    number = number * 10 + digit;
+                }
+                do {
+                    unpack.append(ch);
+                    number -= 1;
+                } while (number > 0);
+                digitCollector.clear();
+            } else {
+                unpack.append(ch);
+            }
         }
         return unpack.toString();
     }
