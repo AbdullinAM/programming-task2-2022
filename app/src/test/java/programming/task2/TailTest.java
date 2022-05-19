@@ -68,7 +68,7 @@ class TailTest {
         tail.writeFile(string, "src/test/resources/output1.txt");
         assertEquals(tail.readFile("src/test/resources/expected1.txt"), tail.readFile("src/test/resources/output1.txt"));
     }
-
+    //проверка на символы
     @Test
     public void tailSymbolsTest() throws IOException {
         String cmd = "-c 5 -o src/test/resources/output2.txt src/test/resources/input2.txt";
@@ -78,7 +78,7 @@ class TailTest {
         TailLauncher tail = new TailLauncher();
         assertEquals(tail.readFile(expected), tail.readFile(actual));
     }
-
+    //проверка на строки
     @Test
     public void tailStringsTest() throws IOException {
         String cmd = "-n 3 -o src/test/resources/output3.txt src/test/resources/input3.txt";
